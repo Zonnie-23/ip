@@ -13,4 +13,5 @@ mark
 unmark 100
 unmark 4
 list
+rubbish
 bye
