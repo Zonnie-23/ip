@@ -49,7 +49,7 @@ public class Nova {
                     } else {
                         throw new NovaException("Index is out of range!");
                     }
-                } catch(NovaException e){
+                } catch (NovaException e){
                     System.out.println("    Error: " + e.getMessage());
                 }
                 break;
@@ -115,6 +115,27 @@ public class Nova {
                     System.out.println("    Got it. I've added this task:\n      " + todo);
                     System.out.println(String.format("    Now you have %d tasks in the list.", toDoList.size()));
                 } catch (NovaException e) {
+                    System.out.println("    Error: " + e.getMessage());
+                }
+                break;
+            case "DELETE":
+                try {
+                    // Check if there exists a next input and is a integer
+                    if (parts.length < 2) {
+                        throw new NovaException("Please specify a task number to delete!");
+                    }
+                    if (!parts[1].matches("\\d+")) {
+                        throw new NovaException("Task number must be an integer!");
+                    }
+                    int delIndex = Integer.parseInt(parts[1]) - 1;
+                    if (delIndex >= 0 && delIndex < toDoList.size()) {
+                        Task deletedTask = toDoList.remove(delIndex);
+                        System.out.println("    Noted. I've removed this task:\n      " + deletedTask);
+                        System.out.println(String.format("    Now you have %d tasks in the list.", toDoList.size()));
+                    } else {
+                        throw new NovaException("Index is out of range!");
+                    }
+                } catch (NovaException e){
                     System.out.println("    Error: " + e.getMessage());
                 }
                 break;
