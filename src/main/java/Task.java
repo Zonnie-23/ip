@@ -7,6 +7,11 @@ public class Task {
         this.isDone = false;
     }
 
+    public Task(String description, boolean isDone) {
+        this.description = description;
+        this.isDone = isDone;
+    }
+
     private String getStatusIcon() {
         return (isDone ? "X" : " "); // mark done task with X
     }
@@ -18,5 +23,9 @@ public class Task {
     @Override
     public String toString() {
         return "[" + getStatusIcon() + "] " + description;
+    }
+
+    public String toCSV() {
+        return String.format("%s,%s",(isDone ? "1" : "0"),description);
     }
 }
