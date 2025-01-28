@@ -1,12 +1,16 @@
-import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Scanner;
 
 public class Nova {
     private static final String HORIZONTAL_BAR = "    ____________________________________________________________\n";
+    private static final List<String> INSTRUCTIONS = Arrays.asList("bye", "list", "mark", "unmark", "event", "deadline", "todo", "delete");
 
     public static void main(String[] args) {
         // Initialise to-do list
-        ArrayList<Task> toDoList = new ArrayList<Task>();
+        Storage taskDataManager = new Storage("./data/task.txt");
+        List<Task> toDoList = taskDataManager.loadTask();
 
         // Greet User
         System.out.println(HORIZONTAL_BAR
@@ -24,7 +28,18 @@ public class Nova {
 
             switch (parts[0].toUpperCase()) {
             case "BYE":
-                System.out.println("    Bye. Hope to see you again soon!");
+                System.out.println("    Do you want to save your todo list? Type \"yes\" to save");
+                System.out.println(HORIZONTAL_BAR);
+                if (scanner.nextLine().startsWith("y")) {
+                    boolean status = taskDataManager.saveTask(toDoList);
+                    if (status == true) {
+                        System.out.println("    Your file has been saved. Hope to see you again soon!");
+                    } else {
+                        break;
+                    }
+                } else {
+                    System.out.println("    Bye. Hope to see you again soon!");
+                }
                 isActive = false;
                 break;
             case "LIST":
@@ -81,7 +96,7 @@ public class Nova {
                     if (components.length != 3) {
                         throw new NovaException("Follow format event <event description> /from <time> /to <time>");
                     }
-                    event = new Event(components[0].substring(parts[0].length()), components[1], components[2]);
+                    event = new Event(components[0].substring(parts[0].length() + 1), components[1], components[2]);
                     toDoList.add(event);
                     System.out.println("    Got it. I've added this task:\n      " + event);
                     System.out.println(String.format("    Now you have %d tasks in the list.", toDoList.size()));
@@ -96,7 +111,7 @@ public class Nova {
                     if (elements.length != 2) {
                         throw new NovaException("Follow format deadline <deadline description> /by <time>");
                     }
-                    deadline = new Deadline(elements[0].substring(parts[0].length()), elements[1]);
+                    deadline = new Deadline(elements[0].substring(parts[0].length() + 1), elements[1]);
                     toDoList.add(deadline);
                     System.out.println("    Got it. I've added this task:\n      " + deadline);
                     System.out.println(String.format("    Now you have %d tasks in the list.", toDoList.size()));
@@ -106,7 +121,7 @@ public class Nova {
                 break;
             case "TODO":
                 try {
-                    String desc = msg.substring(parts[0].length());
+                    String desc = msg.substring(parts[0].length() + 1);
                     if (desc.isEmpty()) {
                         throw new NovaException("Follow format todo <todo description>");
                     }
@@ -139,14 +154,19 @@ public class Nova {
                     System.out.println("    Error: " + e.getMessage());
                 }
                 break;
+            case "HELP":
+                System.out.println("    I accept the following instructions: \n    " + INSTRUCTIONS.toString());
+                break;
             default:
                 try {
-                    throw new NovaException("Sorry, I didn't understand your instructions. Please try again.");
+                    System.out.println("    Sorry, I didn't understand your instructions. Please try again.\n");
+                    throw new NovaException("Type help for list of instructions.");
                 }  catch (NovaException e) {
                     System.out.println("    " + e.getMessage());
                 }
             }
             System.out.println(HORIZONTAL_BAR);
         }
+        scanner.close();
     }
 }
