@@ -1,11 +1,20 @@
-import java.util.ArrayList;
+import Command.ByeCommand;
+import Command.Command;
+import Command.ListCommand;
+import Storage.Storage;
+import Task.Deadline;
+import Task.Event;
+import Task.Task;
+import Task.Todo;
+import UI.UI;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
 public class Nova {
     private static final String HORIZONTAL_BAR = "    ____________________________________________________________\n";
-    private static final List<String> INSTRUCTIONS = Arrays.asList("bye", "list", "mark", "unmark", "event", "deadline", "todo", "delete");
+    private static final List<String> COMMANDS = Arrays.asList("bye", "list", "mark", "unmark", "event", "deadline", "todo", "delete");
 
     public static void main(String[] args) {
         // Initialise to-do list
@@ -13,40 +22,25 @@ public class Nova {
         List<Task> toDoList = taskDataManager.loadTask();
 
         // Greet User
-        System.out.println(HORIZONTAL_BAR
-                + "    Hello! I'm Nova.\n"
-                + "    What can I do for you?\n"
-                + HORIZONTAL_BAR);
+        UI.displayCompleteMessage("Hello! I'm Nova.", "What can I do for you?");
 
         Scanner scanner = new Scanner(System.in);
         boolean isActive = true;
+        boolean isSuccesful = false;
 
         while (isActive) {
             String msg = scanner.nextLine();
-            System.out.println(HORIZONTAL_BAR);
             String[] parts = msg.split("\\s+");
 
             switch (parts[0].toUpperCase()) {
             case "BYE":
-                System.out.println("    Do you want to save your todo list? Type \"yes\" to save");
-                System.out.println(HORIZONTAL_BAR);
-                if (scanner.nextLine().startsWith("y")) {
-                    boolean status = taskDataManager.saveTask(toDoList);
-                    if (status == true) {
-                        System.out.println("    Your file has been saved. Hope to see you again soon!");
-                    } else {
-                        break;
-                    }
-                } else {
-                    System.out.println("    Bye. Hope to see you again soon!");
-                }
+                Command byeCommand = new ByeCommand(toDoList, taskDataManager, scanner);
+                isSuccesful = byeCommand.execute();
                 isActive = false;
                 break;
             case "LIST":
-                System.out.println("    Here are the tasks in your list:\n");
-                for (int i = 1; i <= toDoList.size(); i++) {
-                    System.out.println("    " + i + "." + toDoList.get(i - 1));
-                }
+                Command listCommand = new ListCommand(toDoList);
+                isSuccesful = listCommand.execute();
                 break;
             case "MARK":
                 try {
@@ -55,7 +49,7 @@ public class Nova {
                         throw new NovaException("Please specify a task number to mark!");
                     }
                     if (!parts[1].matches("\\d+")) {
-                        throw new NovaException("Task number must be an integer!");
+                        throw new NovaException("Task.Task number must be an integer!");
                     }
                     int markIndex = Integer.parseInt(parts[1]) - 1;
                     if (markIndex >= 0 && markIndex < toDoList.size()) {
@@ -75,7 +69,7 @@ public class Nova {
                         throw new NovaException("Please specify a task number to unmark!");
                     }
                     if (!parts[1].matches("\\d+")) {
-                        throw new NovaException("Task number must be an integer!");
+                        throw new NovaException("Task.Task number must be an integer!");
                     }
                     int unmarkIndex = Integer.parseInt(parts[1]) - 1;
                     if (unmarkIndex >= 0 && unmarkIndex < toDoList.size()) {
@@ -94,7 +88,7 @@ public class Nova {
                     String[] components = msg.split(" /from | /to ", 3);
                     Task event;
                     if (components.length != 3) {
-                        throw new NovaException("Follow format event <event description> /from <time> /to <time>");
+                        throw new NovaException("Follow format: event <event description> /from <time> /to <time>");
                     }
                     event = new Event(components[0].substring(parts[0].length() + 1), components[1], components[2]);
                     toDoList.add(event);
@@ -109,7 +103,7 @@ public class Nova {
                     String[] elements = msg.split(" /by ",2);
                     Task deadline;
                     if (elements.length != 2) {
-                        throw new NovaException("Follow format deadline <deadline description> /by <time>");
+                        throw new NovaException("Follow format: deadline <deadline description> /by <time>");
                     }
                     deadline = new Deadline(elements[0].substring(parts[0].length() + 1), elements[1]);
                     toDoList.add(deadline);
@@ -123,7 +117,7 @@ public class Nova {
                 try {
                     String desc = msg.substring(parts[0].length() + 1);
                     if (desc.isEmpty()) {
-                        throw new NovaException("Follow format todo <todo description>");
+                        throw new NovaException("Follow format: todo <todo description>");
                     }
                     Task todo = new Todo(desc);
                     toDoList.add(todo);
@@ -140,7 +134,7 @@ public class Nova {
                         throw new NovaException("Please specify a task number to delete!");
                     }
                     if (!parts[1].matches("\\d+")) {
-                        throw new NovaException("Task number must be an integer!");
+                        throw new NovaException("Task.Task number must be an integer!");
                     }
                     int delIndex = Integer.parseInt(parts[1]) - 1;
                     if (delIndex >= 0 && delIndex < toDoList.size()) {
@@ -155,17 +149,19 @@ public class Nova {
                 }
                 break;
             case "HELP":
-                System.out.println("    I accept the following instructions: \n    " + INSTRUCTIONS.toString());
+                System.out.println("    I accept the following instructions: \n    " + COMMANDS.toString());
                 break;
             default:
                 try {
                     System.out.println("    Sorry, I didn't understand your instructions. Please try again.\n");
-                    throw new NovaException("Type help for list of instructions.");
+                    throw new NovaException("Type help for list of commands.");
                 }  catch (NovaException e) {
                     System.out.println("    " + e.getMessage());
                 }
             }
-            System.out.println(HORIZONTAL_BAR);
+        }
+        if (!isSuccesful) {
+
         }
         scanner.close();
     }

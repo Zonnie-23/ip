@@ -1,3 +1,10 @@
+package Storage;
+
+import Task.Task;
+import Task.Deadline;
+import Task.Todo;
+import Task.Event;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -35,13 +42,13 @@ public class Storage {
             return tasks;
             // If parseTask returns null, don't add to tasks
         } catch (IOException e) {
-            System.out.println("Error reading data file: " + e.getMessage());
+            System.out.println("    Error reading data file: " + e.getMessage());
             return null;
         }
     }
 
     /*
-     * Convert csv to corresponding Task object for a given line
+     * Convert csv to corresponding Task.Task object for a given line
      * Since it is a private method, it is assumed that the programmer knows that only
      * one line of input is allowed
      */
@@ -63,11 +70,11 @@ public class Storage {
                 String endTime = parts[4];
                 return new Event(description, isDone, startTime, endTime);
             default:
-                System.out.println("Unknown task type: " + type);
+                System.out.println("    Unknown task type: " + type);
                 return null;
             }
         } catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println("Error parsing data file: " + e.getMessage());
+            System.out.println("    Error parsing data file: " + e.getMessage());
             return null;
         }
     }
@@ -90,7 +97,7 @@ public class Storage {
                 return true;
             }
         } catch (IOException e) {
-            System.out.println("Error saving tasks: " + e.getMessage());
+            System.out.println("    Error saving tasks: " + e.getMessage());
             return false;
         }
     }
