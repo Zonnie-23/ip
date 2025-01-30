@@ -11,26 +11,29 @@ public class ByeCommand implements Command {
     private final List<Task> toDoList;
     private final Storage storage;
     private final Scanner scanner;
+    private final UI ui;
 
-    public ByeCommand(List<Task> toDoList, Storage storage, Scanner scanner) {
+    public ByeCommand(List<Task> toDoList, Storage storage, Scanner scanner, UI ui) {
         this.toDoList = toDoList;
         this.storage = storage;
         this.scanner = scanner;
+        this.ui = ui;
     }
 
     @Override
     public boolean execute() {
-        UI.displayCompleteMessage("Do you want to save your todo list? Type \"yes\" to save");
+        ui.displayMessage("Do you want to save your todo list? Type \"yes\" to save");
         if (scanner.nextLine().startsWith("y")) {
             boolean status = storage.saveTask(toDoList);
             if (status) {
-                UI.displayCompleteMessage("Your file has been saved. Hope to see you again soon!");
+                ui.displayMessage("Your file has been saved. Hope to see you again soon!");
             } else {
-                return true;
+                ui.displayMessage("File not saved!");
+                return false;
             }
         } else {
-            UI.displayCompleteMessage("Bye. Hope to see you again soon!");
+            ui.displayMessage("Bye. Hope to see you again soon!");
         }
-        return false;
+        return true;
     }
 }

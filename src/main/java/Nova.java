@@ -1,6 +1,9 @@
 import Command.ByeCommand;
 import Command.Command;
 import Command.ListCommand;
+import Command.StatusUpdateCommand;
+import Command.DeleteCommand;
+import Exception.NovaException;
 import Storage.Storage;
 import Task.Deadline;
 import Task.Event;
@@ -22,64 +25,37 @@ public class Nova {
         List<Task> toDoList = taskDataManager.loadTask();
 
         // Greet User
-        UI.displayCompleteMessage("Hello! I'm Nova.", "What can I do for you?");
+        UI ui = new UI();
+        ui.displayMessage("Hello! I'm Nova.", "What can I do for you?");
+        ui.close();
 
         Scanner scanner = new Scanner(System.in);
         boolean isActive = true;
-        boolean isSuccesful = false;
+        boolean isSuccessful = false;
 
         while (isActive) {
             String msg = scanner.nextLine();
             String[] parts = msg.split("\\s+");
+            boolean shouldMark = false;
+            ui.open();
 
             switch (parts[0].toUpperCase()) {
             case "BYE":
-                Command byeCommand = new ByeCommand(toDoList, taskDataManager, scanner);
-                isSuccesful = byeCommand.execute();
+                Command byeCommand = new ByeCommand(toDoList, taskDataManager, scanner, ui);
+                isSuccessful = byeCommand.execute();
                 isActive = false;
                 break;
             case "LIST":
-                Command listCommand = new ListCommand(toDoList);
-                isSuccesful = listCommand.execute();
+                Command listCommand = new ListCommand(toDoList, ui);
+                isSuccessful = listCommand.execute();
                 break;
             case "MARK":
-                try {
-                    // Check if there exists a next input and is a integer
-                    if (parts.length < 2) {
-                        throw new NovaException("Please specify a task number to mark!");
-                    }
-                    if (!parts[1].matches("\\d+")) {
-                        throw new NovaException("Task.Task number must be an integer!");
-                    }
-                    int markIndex = Integer.parseInt(parts[1]) - 1;
-                    if (markIndex >= 0 && markIndex < toDoList.size()) {
-                        toDoList.get(markIndex).setStatus(true);
-                        System.out.println("    Nice! I've marked this task as done:\n      " + toDoList.get(markIndex));
-                    } else {
-                        throw new NovaException("Index is out of range!");
-                    }
-                } catch (NovaException e){
-                    System.out.println("    Error: " + e.getMessage());
-                }
-                break;
+                shouldMark = true;
             case "UNMARK":
                 try {
-                    // Check if there exists a next input and is a integer
-                    if (parts.length < 2) {
-                        throw new NovaException("Please specify a task number to unmark!");
-                    }
-                    if (!parts[1].matches("\\d+")) {
-                        throw new NovaException("Task.Task number must be an integer!");
-                    }
-                    int unmarkIndex = Integer.parseInt(parts[1]) - 1;
-                    if (unmarkIndex >= 0 && unmarkIndex < toDoList.size()) {
-                        toDoList.get(unmarkIndex).setStatus(false);
-                        System.out.println("    OK, I've marked this task as not done yet:\n      "
-                                + toDoList.get(unmarkIndex));
-                    } else {
-                        throw new NovaException("Index is out of range!");
-                    }
-                } catch (NovaException e) {
+                    Command markCommand = new StatusUpdateCommand(toDoList, parts, ui, shouldMark);
+                    isSuccessful = markCommand.execute();
+                } catch (NovaException e){
                     System.out.println("    Error: " + e.getMessage());
                 }
                 break;
@@ -129,40 +105,34 @@ public class Nova {
                 break;
             case "DELETE":
                 try {
-                    // Check if there exists a next input and is a integer
-                    if (parts.length < 2) {
-                        throw new NovaException("Please specify a task number to delete!");
-                    }
-                    if (!parts[1].matches("\\d+")) {
-                        throw new NovaException("Task.Task number must be an integer!");
-                    }
-                    int delIndex = Integer.parseInt(parts[1]) - 1;
-                    if (delIndex >= 0 && delIndex < toDoList.size()) {
-                        Task deletedTask = toDoList.remove(delIndex);
-                        System.out.println("    Noted. I've removed this task:\n      " + deletedTask);
-                        System.out.println(String.format("    Now you have %d tasks in the list.", toDoList.size()));
-                    } else {
-                        throw new NovaException("Index is out of range!");
-                    }
+                    Command deleteCommand = new DeleteCommand(toDoList, parts, ui);
+                    isSuccessful = deleteCommand.execute();
                 } catch (NovaException e){
                     System.out.println("    Error: " + e.getMessage());
                 }
                 break;
             case "HELP":
-                System.out.println("    I accept the following instructions: \n    " + COMMANDS.toString());
+                ui.displayMessage("I accept the following instructions:", COMMANDS.toString());
+                isSuccessful = true;
                 break;
             default:
                 try {
-                    System.out.println("    Sorry, I didn't understand your instructions. Please try again.\n");
+                    ui.displayMessage("Sorry, I didn't understand your instructions. Please try again.");
                     throw new NovaException("Type help for list of commands.");
                 }  catch (NovaException e) {
                     System.out.println("    " + e.getMessage());
+                    // Default clause is meant to handle any unknown command, so if we reach this clause, then the handling
+                    // of the unknown instruction is successful
+                    isSuccessful = true;
                 }
             }
+            if (!isSuccessful) {
+                // To inform user that command is found but execution is unsuccessful
+                ui.displayMessage("Please try again.");
+            }
+            ui.close();
         }
-        if (!isSuccesful) {
 
-        }
         scanner.close();
     }
 }

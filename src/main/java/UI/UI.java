@@ -6,26 +6,34 @@ import java.util.List;
 
 
 public class UI {
-    private static final String HORIZONTAL_BAR = "    ____________________________________________________________\n";
+    private static final String HORIZONTAL_BAR = "    ____________________________________________________________";
 
-    public static void displayCompleteMessage(String... messages) {
+    public UI() {
         displaySeperator();
+    }
+
+    public void displayMessage(String... messages) {
         for (String message : messages) {
             System.out.println("    " + message);
         }
-        displaySeperator();
     }
 
-    private static void displaySeperator() {
+    private void displaySeperator() {
         System.out.println(HORIZONTAL_BAR);
     }
 
-    public static void displayTaskList(List<Task> taskList) {
-        displaySeperator();
+    public void displayTaskList(List<Task> taskList) {
         System.out.println("    Here are the tasks in your list: ");
         for (int i = 1; i <= taskList.size(); i++) {
             System.out.println("    " + i + "." + taskList.get(i - 1));
         }
+    }
+
+    public void open() {
+        displaySeperator();
+    }
+
+    public void close() {
         displaySeperator();
     }
 }

@@ -6,15 +6,17 @@ import UI.UI;
 import java.util.List;
 
 public class ListCommand implements Command {
-    private List<Task> list;
+    private final List<Task> list;
+    private final UI ui;
 
-    public ListCommand(List<Task> list) {
+    public ListCommand(List<Task> list, UI ui) {
         this.list = list;
+        this.ui = ui;
     }
 
     @Override
     public boolean execute() {
-        UI.displayTaskList(list);
+        ui.displayTaskList(list);
         return true;
     }
 }

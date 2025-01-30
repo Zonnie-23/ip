@@ -53,7 +53,7 @@ public class Storage {
      * one line of input is allowed
      */
     private Task parseTask(String line) {
-        String[] parts = line.split(",", 4);
+        String[] parts = line.split(",", 5);
         try {
             String type = parts[0];
             boolean isDone = parts[1].equals("1");
