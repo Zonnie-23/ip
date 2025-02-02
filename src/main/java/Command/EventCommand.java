@@ -2,6 +2,7 @@ package Command;
 
 import Task.Event;
 import Task.Task;
+import TaskList.TaskList;
 import UI.UI;
 import Parser.Parser;
 
@@ -14,10 +15,10 @@ public class EventCommand implements Command {
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private String[] msgParts;
-    private List<Task> toDoList;
+    private TaskList toDoList;
     private UI ui;
 
-    public EventCommand(String instruction, List<Task> toDoList, UI ui) throws NovaException {
+    public EventCommand(String instruction, TaskList toDoList, UI ui) throws NovaException {
         this.toDoList = toDoList;
         this.ui = ui;
         this.msgParts = instruction.split(" /from | /to ", 3);
@@ -36,7 +37,7 @@ public class EventCommand implements Command {
     @Override
     public boolean execute() {
         Task event = new Event(msgParts[0].substring("deadline".length() + 1), startTime, endTime);
-        toDoList.add(event);
+        toDoList.addTask(event);
         ui.displayMessages("Got it. I've added this task:" , "  " + event);
         ui.displayMessages(String.format("Now you have %d tasks in the list.", toDoList.size()));
         return true;

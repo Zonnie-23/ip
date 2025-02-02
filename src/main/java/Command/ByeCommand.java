@@ -2,18 +2,19 @@ package Command;
 
 import Storage.Storage;
 import Task.Task;
+import TaskList.TaskList;
 import UI.UI;
 
 import java.util.List;
 import java.util.Scanner;
 
 public class ByeCommand implements Command {
-    private final List<Task> toDoList;
+    private final TaskList toDoList;
     private final Storage storage;
     private final Scanner scanner;
     private final UI ui;
 
-    public ByeCommand(List<Task> toDoList, Storage storage, Scanner scanner, UI ui) {
+    public ByeCommand(TaskList toDoList, Storage storage, Scanner scanner, UI ui) {
         this.toDoList = toDoList;
         this.storage = storage;
         this.scanner = scanner;

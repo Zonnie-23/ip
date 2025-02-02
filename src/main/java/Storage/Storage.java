@@ -4,6 +4,7 @@ import Task.Task;
 import Task.Deadline;
 import Task.Todo;
 import Task.Event;
+import TaskList.TaskList;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -81,8 +82,9 @@ public class Storage {
         }
     }
 
-    public boolean saveTask(List<Task> tasks) {
+    public boolean saveTask(TaskList tasks) {
         try {
+            List<Task> taskList = tasks.getTasks();
             if (!dataFile.getParentFile().exists()) {
                 dataFile.getParentFile().mkdirs();
             }
@@ -92,7 +94,7 @@ public class Storage {
             }
 
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(dataFile))) {
-                for (Task task : tasks) {
+                for (Task task : taskList) {
                     writer.write(task.toCsv());
                     writer.newLine();
                 }
