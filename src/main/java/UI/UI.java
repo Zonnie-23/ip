@@ -1,6 +1,7 @@
 package UI;
 
 import Task.Task;
+import TaskList.TaskList;
 
 import java.util.List;
 
@@ -20,10 +21,11 @@ public class UI {
         System.out.println(HORIZONTAL_BAR);
     }
 
-    public void displayTasks(List<Task> taskList) {
+    public void displayTasks(TaskList taskList) {
+        List<Task> tasks = taskList.getTasks();
         System.out.println("    Here are the tasks in your list: ");
         for (int i = 1; i <= taskList.size(); i++) {
-            System.out.println("    " + i + "." + taskList.get(i - 1));
+            System.out.println("    " + i + "." + tasks.get(i - 1));
         }
     }
 

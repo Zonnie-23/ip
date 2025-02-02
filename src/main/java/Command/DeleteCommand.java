@@ -1,18 +1,19 @@
 package Command;
 
 import Task.Task;
+import TaskList.TaskList;
 import UI.UI;
 import Exception.NovaException;
 
 import java.util.List;
 
 public class DeleteCommand implements Command {
-    private List<Task> toDoList;
+    private TaskList toDoList;
     private UI ui;
     private int taskIndex;
 
 
-    public DeleteCommand(List<Task> toDoList, String[] instruction, UI ui) throws NovaException {
+    public DeleteCommand(TaskList toDoList, String[] instruction, UI ui) throws NovaException {
         this.ui = ui;
         this.toDoList = toDoList;
         if (instruction.length < 2) {
@@ -28,7 +29,7 @@ public class DeleteCommand implements Command {
     public boolean execute() {
         try {
             if (taskIndex >= 0 && taskIndex < toDoList.size()) {
-                Task deletedTask = toDoList.remove(taskIndex);
+                Task deletedTask = toDoList.removeTask(taskIndex);
                 ui.displayMessages("Noted. I've removed this task:", "  " + deletedTask);
                 ui.displayMessages(String.format("Now you have %d tasks in the list.", toDoList.size()));
                 return true;

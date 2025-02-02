@@ -2,17 +2,18 @@ package Command;
 
 import Task.Task;
 import Exception.NovaException;
+import TaskList.TaskList;
 import UI.UI;
 
 import java.util.List;
 
 public class StatusUpdateCommand implements Command {
-    private List<Task> toDoList;
+    private TaskList toDoList;
     private int taskIndex;
     private UI ui;
     private boolean isDone;
 
-    public StatusUpdateCommand(List<Task> toDoList, String[] instruction, UI ui, boolean isDone) throws NovaException {
+    public StatusUpdateCommand(TaskList toDoList, String[] instruction, UI ui, boolean isDone) throws NovaException {
         this.ui = ui;
         this.toDoList = toDoList;
         if (instruction.length < 2) {
@@ -30,8 +31,8 @@ public class StatusUpdateCommand implements Command {
         try {
             // Check if there exists a next input and is a integer
             if (taskIndex >= 0 && taskIndex < toDoList.size()) {
-                toDoList.get(taskIndex).setStatus(isDone);
-                ui.displayMessages("Nice! I've marked this task as done:", "  " + toDoList.get(taskIndex).toString());
+                toDoList.getTask(taskIndex).setStatus(isDone);
+                ui.displayMessages("Nice! I've marked this task as done:", "  " + toDoList.getTask(taskIndex).toString());
             } else {
                 throw new NovaException("Index is out of range!");
             }

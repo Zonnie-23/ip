@@ -9,6 +9,7 @@ import Exception.NovaException;
 import Storage.Storage;
 import Task.Task;
 import Task.Todo;
+import TaskList.TaskList;
 import UI.UI;
 
 import java.util.Arrays;
@@ -21,7 +22,7 @@ public class Nova {
     public static void main(String[] args) {
         // Initialise to-do list
         Storage taskDataManager = new Storage("./data/task.txt");
-        List<Task> toDoList = taskDataManager.loadTask();
+        TaskList toDoList = new TaskList(taskDataManager.loadTask());
 
         // Greet User
         UI ui = new UI();
@@ -82,7 +83,7 @@ public class Nova {
                         throw new NovaException("Follow format: todo <todo description>");
                     }
                     Task todo = new Todo(desc);
-                    toDoList.add(todo);
+                    toDoList.addTask(todo);
                     System.out.println("    Got it. I've added this task:\n      " + todo);
                     System.out.println(String.format("    Now you have %d tasks in the list.", toDoList.size()));
                     isSuccessful = true;
