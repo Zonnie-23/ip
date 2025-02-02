@@ -1,25 +1,29 @@
 package Task;
 
-public class Deadline extends Task {
-    private String dueTime;
+import Parser.Parser;
 
-    public Deadline(String description, String dueTime) {
+import java.time.LocalDateTime;
+
+public class Deadline extends Task {
+    private LocalDateTime dueTime;
+
+    public Deadline(String description, LocalDateTime dueTime) {
         super(description);
         this.dueTime = dueTime;
     }
 
-    public Deadline(String description, boolean isDone, String time) {
+    public Deadline(String description, boolean isDone, LocalDateTime time) {
         super(description, isDone);
         this.dueTime = time;
     }
 
     @Override
     public String toString() {
-        return String.format("[D]%s (by: %s)", super.toString(), dueTime);
+        return String.format("[D]%s (by: %s)", super.toString(), Parser.outputDateTime(dueTime));
     }
 
     @Override
-    public String toCSV() {
-        return "D," + super.toCSV() + "," + dueTime;
+    public String toCsv() {
+        return "D," + super.toCsv() + "," + dueTime;
     }
 }

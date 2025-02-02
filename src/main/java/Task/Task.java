@@ -1,6 +1,7 @@
 package Task;
 
-public class Task {
+public class
+Task {
     protected String description;
     protected boolean isDone;
 
@@ -27,7 +28,7 @@ public class Task {
         return "[" + getStatusIcon() + "] " + description;
     }
 
-    public String toCSV() {
+    public String toCsv() {
         return String.format("%s,%s",(isDone ? "1" : "0"),description);
     }
 }

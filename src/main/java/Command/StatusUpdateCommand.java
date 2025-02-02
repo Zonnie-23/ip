@@ -31,7 +31,7 @@ public class StatusUpdateCommand implements Command {
             // Check if there exists a next input and is a integer
             if (taskIndex >= 0 && taskIndex < toDoList.size()) {
                 toDoList.get(taskIndex).setStatus(isDone);
-                ui.displayMessage("Nice! I've marked this task as done:", "  " + toDoList.get(taskIndex).toString());
+                ui.displayMessages("Nice! I've marked this task as done:", "  " + toDoList.get(taskIndex).toString());
             } else {
                 throw new NovaException("Index is out of range!");
             }

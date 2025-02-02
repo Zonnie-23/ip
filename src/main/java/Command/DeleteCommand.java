@@ -29,8 +29,8 @@ public class DeleteCommand implements Command {
         try {
             if (taskIndex >= 0 && taskIndex < toDoList.size()) {
                 Task deletedTask = toDoList.remove(taskIndex);
-                ui.displayMessage("Noted. I've removed this task:", "  " + deletedTask);
-                ui.displayMessage(String.format("Now you have %d tasks in the list.", toDoList.size()));
+                ui.displayMessages("Noted. I've removed this task:", "  " + deletedTask);
+                ui.displayMessages(String.format("Now you have %d tasks in the list.", toDoList.size()));
                 return true;
             } else {
                 throw new NovaException("Index is out of range!");

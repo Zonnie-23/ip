@@ -1,5 +1,6 @@
 package Task;
 
+
 public class Todo extends Task {
     public Todo(String description) {
         super(description);
@@ -15,7 +16,7 @@ public class Todo extends Task {
     }
 
     @Override
-    public String toCSV() {
-        return "T," + super.toCSV();
+    public String toCsv() {
+        return "T," + super.toCsv();
     }
 }

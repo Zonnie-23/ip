@@ -22,17 +22,17 @@ public class ByeCommand implements Command {
 
     @Override
     public boolean execute() {
-        ui.displayMessage("Do you want to save your todo list? Type \"yes\" to save");
+        ui.displayMessages("Do you want to save your todo list? Type \"yes\" to save");
         if (scanner.nextLine().startsWith("y")) {
             boolean status = storage.saveTask(toDoList);
             if (status) {
-                ui.displayMessage("Your file has been saved. Hope to see you again soon!");
+                ui.displayMessages("Your file has been saved. Hope to see you again soon!");
             } else {
-                ui.displayMessage("File not saved!");
+                ui.displayMessages("File not saved!");
                 return false;
             }
         } else {
-            ui.displayMessage("Bye. Hope to see you again soon!");
+            ui.displayMessages("Bye. Hope to see you again soon!");
         }
         return true;
     }

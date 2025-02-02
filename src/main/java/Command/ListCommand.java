@@ -16,7 +16,7 @@ public class ListCommand implements Command {
 
     @Override
     public boolean execute() {
-        ui.displayTaskList(list);
+        ui.displayTasks(list);
         return true;
     }
 }

@@ -12,6 +12,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import java.time.DateTimeException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,17 +65,17 @@ public class Storage {
             case "T":
                 return new Todo(description, isDone);
             case "D":
-                String time = parts[3];
+                LocalDateTime time = LocalDateTime.parse(parts[3]);
                 return new Deadline(description, isDone, time);
             case "E":
-                String startTime = parts[3];
-                String endTime = parts[4];
+                LocalDateTime startTime = LocalDateTime.parse(parts[3]);
+                LocalDateTime endTime = LocalDateTime.parse(parts[4]);
                 return new Event(description, isDone, startTime, endTime);
             default:
                 System.out.println("    Unknown task type: " + type);
                 return null;
             }
-        } catch (ArrayIndexOutOfBoundsException e) {
+        } catch (ArrayIndexOutOfBoundsException | DateTimeException e) {
             System.out.println("    Error parsing data file: " + e.getMessage());
             return null;
         }
@@ -91,7 +93,7 @@ public class Storage {
 
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(dataFile))) {
                 for (Task task : tasks) {
-                    writer.write(task.toCSV());
+                    writer.write(task.toCsv());
                     writer.newLine();
                 }
                 return true;
