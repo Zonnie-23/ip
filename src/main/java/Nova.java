@@ -5,10 +5,9 @@ import Command.DeleteCommand;
 import Command.EventCommand;
 import Command.ListCommand;
 import Command.StatusUpdateCommand;
+import Command.TodoCommand;
 import Exception.NovaException;
 import Storage.Storage;
-import Task.Task;
-import Task.Todo;
 import TaskList.TaskList;
 import UI.UI;
 
@@ -78,15 +77,8 @@ public class Nova {
                 break;
             case "TODO":
                 try {
-                    String desc = msg.substring(msgParts[0].length() + 1);
-                    if (desc.isEmpty()) {
-                        throw new NovaException("Follow format: todo <todo description>");
-                    }
-                    Task todo = new Todo(desc);
-                    toDoList.addTask(todo);
-                    System.out.println("    Got it. I've added this task:\n      " + todo);
-                    System.out.println(String.format("    Now you have %d tasks in the list.", toDoList.size()));
-                    isSuccessful = true;
+                    Command todoCommand = new TodoCommand(msg, toDoList, ui);
+                    isSuccessful = todoCommand.execute();
                 } catch (NovaException e) {
                     System.out.println("    Error: " + e.getMessage());
                 }

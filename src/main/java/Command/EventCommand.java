@@ -1,15 +1,14 @@
 package Command;
 
+import Exception.NovaException;
+import Parser.Parser;
 import Task.Event;
 import Task.Task;
 import TaskList.TaskList;
 import UI.UI;
-import Parser.Parser;
 
 import java.time.DateTimeException;
 import java.time.LocalDateTime;
-import java.util.List;
-import Exception.NovaException;
 
 public class EventCommand implements Command {
     private LocalDateTime startTime;
@@ -36,7 +35,7 @@ public class EventCommand implements Command {
 
     @Override
     public boolean execute() {
-        Task event = new Event(msgParts[0].substring("deadline".length() + 1), startTime, endTime);
+        Task event = new Event(msgParts[0].substring("event".length() + 1), startTime, endTime);
         toDoList.addTask(event);
         ui.displayMessages("Got it. I've added this task:" , "  " + event);
         ui.displayMessages(String.format("Now you have %d tasks in the list.", toDoList.size()));

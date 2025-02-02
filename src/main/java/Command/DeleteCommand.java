@@ -1,11 +1,9 @@
 package Command;
 
+import Exception.NovaException;
 import Task.Task;
 import TaskList.TaskList;
 import UI.UI;
-import Exception.NovaException;
-
-import java.util.List;
 
 public class DeleteCommand implements Command {
     private TaskList toDoList;

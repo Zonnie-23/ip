@@ -1,10 +1,7 @@
 package Command;
 
-import Task.Task;
 import TaskList.TaskList;
 import UI.UI;
-
-import java.util.List;
 
 public class ListCommand implements Command {
     private final TaskList list;

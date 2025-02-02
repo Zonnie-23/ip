@@ -1,7 +1,6 @@
 package Task;
 
-public class
-Task {
+public class Task {
     protected String description;
     protected boolean isDone;
 

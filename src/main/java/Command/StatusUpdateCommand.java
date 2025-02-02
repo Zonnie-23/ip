@@ -1,11 +1,8 @@
 package Command;
 
-import Task.Task;
 import Exception.NovaException;
 import TaskList.TaskList;
 import UI.UI;
-
-import java.util.List;
 
 public class StatusUpdateCommand implements Command {
     private TaskList toDoList;
