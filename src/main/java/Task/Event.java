@@ -1,8 +1,8 @@
 package Task;
 
-import Parser.Parser;
-
 import java.time.LocalDateTime;
+
+import Parser.Parser;
 
 public class Event extends Task {
     private LocalDateTime startTime;

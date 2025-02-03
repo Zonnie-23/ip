@@ -1,14 +1,14 @@
 package Command;
 
+import java.time.DateTimeException;
+import java.time.LocalDateTime;
+
 import Exception.NovaException;
 import Parser.Parser;
 import Task.Event;
 import Task.Task;
 import TaskList.TaskList;
 import UI.UI;
-
-import java.time.DateTimeException;
-import java.time.LocalDateTime;
 
 public class EventCommand implements Command {
     private TaskList toDoList;

@@ -1,3 +1,7 @@
+import java.util.Arrays;
+import java.util.List;
+import java.util.Scanner;
+
 import Command.ByeCommand;
 import Command.Command;
 import Command.DeadlineCommand;
@@ -10,10 +14,6 @@ import Exception.NovaException;
 import Storage.Storage;
 import TaskList.TaskList;
 import UI.UI;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
 
 public class Nova {
     private static final List<String> COMMANDS = Arrays.asList("bye", "list", "mark", "unmark", "event", "deadline", "todo", "delete");

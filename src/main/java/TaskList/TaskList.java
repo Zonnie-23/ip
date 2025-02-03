@@ -1,8 +1,8 @@
 package TaskList;
 
-import Task.Task;
-
 import java.util.List;
+
+import Task.Task;
 
 public class TaskList {
     private List<Task> tasks;

@@ -1,8 +1,8 @@
 package Task;
 
-import Parser.Parser;
-
 import java.time.LocalDateTime;
+
+import Parser.Parser;
 
 public class Deadline extends Task {
     private LocalDateTime dueTime;
