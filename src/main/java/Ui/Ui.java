@@ -5,7 +5,6 @@ import java.util.List;
 import Task.Task;
 import TaskList.TaskList;
 
-
 public class Ui {
     private static final String HORIZONTAL_BAR = "    ____________________________________________________________";
 
