@@ -9,7 +9,7 @@ import Command.TodoCommand;
 import Exception.NovaException;
 import Storage.Storage;
 import TaskList.TaskList;
-import UI.UI;
+import Ui.Ui;
 
 import java.util.Arrays;
 import java.util.List;
@@ -20,11 +20,11 @@ public class Nova {
 
     public static void main(String[] args) {
         // Initialise to-do list
-        Storage taskDataManager = new Storage("./data/task.txt");
+        Storage taskDataManager = new Storage("./data/task.csv");
         TaskList toDoList = new TaskList(taskDataManager.loadTask());
 
         // Greet User
-        UI ui = new UI();
+        Ui ui = new Ui();
         ui.open();
         ui.displayMessages("Hello! I'm Nova.", "What can I do for you?");
         ui.close();

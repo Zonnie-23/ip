@@ -3,15 +3,26 @@ package Command;
 import Exception.NovaException;
 import Task.Task;
 import TaskList.TaskList;
-import UI.UI;
+import Ui.Ui;
 
+/**
+ * Command to delete a task from the task list
+ */
 public class DeleteCommand implements Command {
     private TaskList toDoList;
-    private UI ui;
+    private Ui ui;
     private int taskIndex;
 
-
-    public DeleteCommand(TaskList toDoList, UI ui, String[] instruction) throws NovaException {
+    /**
+     * Constructs a new delete command and verifies that the inputs are valid.
+     *
+     * @param toDoList    the task list to which the deadline will be added.
+     * @param ui          the user interface for displaying messages.
+     * @param instruction the command instruction containing the task description and deadline, parsed into an array
+     *                    separated by spaces.
+     * @throws NovaException if the instruction format is invalid or the deadline time cannot be parsed.
+     */
+    public DeleteCommand(TaskList toDoList, Ui ui, String[] instruction) throws NovaException {
         this.ui = ui;
         this.toDoList = toDoList;
         if (instruction.length < 2) {
@@ -23,6 +34,11 @@ public class DeleteCommand implements Command {
         this.taskIndex = Integer.parseInt(instruction[1]) - 1;
     }
 
+    /**
+     * Executes the delete command by removing the specified task from the task list.
+     *
+     * @return true if the task was removed successfully; false otherwise.
+     */
     @Override
     public boolean execute() {
         try {

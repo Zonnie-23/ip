@@ -4,14 +4,14 @@ import Exception.NovaException;
 import Task.Task;
 import Task.Todo;
 import TaskList.TaskList;
-import UI.UI;
+import Ui.Ui;
 
 public class TodoCommand implements Command{
     private TaskList toDoList;
-    private UI ui;
+    private Ui ui;
     private String description;
 
-    public TodoCommand(TaskList toDoList, UI ui, String instruction) throws NovaException {
+    public TodoCommand(TaskList toDoList, Ui ui, String instruction) throws NovaException {
         this.toDoList = toDoList;
         this.ui = ui;
         this.description = instruction.substring("todo".length() + 1);

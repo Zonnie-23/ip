@@ -1,13 +1,13 @@
 package Command;
 
 import TaskList.TaskList;
-import UI.UI;
+import Ui.Ui;
 
 public class ListCommand implements Command {
     private final TaskList list;
-    private final UI ui;
+    private final Ui ui;
 
-    public ListCommand(TaskList list, UI ui) {
+    public ListCommand(TaskList list, Ui ui) {
         this.list = list;
         this.ui = ui;
     }

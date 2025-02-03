@@ -18,6 +18,9 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Handles file-based storage operations for tasks.
+ */
 public class Storage {
     private final File dataFile;
 
@@ -25,7 +28,11 @@ public class Storage {
         this.dataFile = new File(filePath.replace("/", File.separator));
     }
 
-    // Load tasks from CSV file
+    /**
+     * Loads tasks from CSV data file.
+     *
+      * @return a list of tasks loaded from the file; returns empty list if file not found.
+     */
     public List<Task> loadTask() {
         List<Task> tasks = new ArrayList<Task>();
 
@@ -38,22 +45,23 @@ public class Storage {
             String line;
             while ((line = reader.readLine()) != null) {
                 Task task = parseTask(line);
+                // If parseTask returns null, don't add to list
                 if (task != null) {
                     tasks.add(task);
                 }
             }
             return tasks;
-            // If parseTask returns null, don't add to tasks
         } catch (IOException e) {
             System.out.println("    Error reading data file: " + e.getMessage());
             return null;
         }
     }
 
-    /*
-     * Convert csv to corresponding Task.Task object for a given line
-     * Since it is a private method, it is assumed that the programmer knows that only
-     * one line of input is allowed
+    /**
+     * Parses a line from the data file into a Task object.
+     *
+     * @param line a CSV-formatted string representing a task.
+     * @return the Task object, or null if parsing fails.
      */
     private Task parseTask(String line) {
         String[] parts = line.split(",", 5);
@@ -82,6 +90,12 @@ public class Storage {
         }
     }
 
+    /**
+     * Saves the tasks from the given task list into the data file.
+     *
+     * @param tasks the TaskList containing tasks to be saved.
+     * @return true if saving was successful, false otherwise.
+     */
     public boolean saveTask(TaskList tasks) {
         try {
             List<Task> taskList = tasks.getTasks();

@@ -2,15 +2,15 @@ package Command;
 
 import Exception.NovaException;
 import TaskList.TaskList;
-import UI.UI;
+import Ui.Ui;
 
 public class StatusUpdateCommand implements Command {
     private TaskList toDoList;
-    private UI ui;
+    private Ui ui;
     private int taskIndex;
     private boolean isDone;
 
-    public StatusUpdateCommand(TaskList toDoList, UI ui, String[] instruction , boolean isDone) throws NovaException {
+    public StatusUpdateCommand(TaskList toDoList, Ui ui, String[] instruction , boolean isDone) throws NovaException {
         this.ui = ui;
         this.toDoList = toDoList;
         if (instruction.length < 2) {
