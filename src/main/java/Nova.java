@@ -7,6 +7,7 @@ import Command.Command;
 import Command.DeadlineCommand;
 import Command.DeleteCommand;
 import Command.EventCommand;
+import Command.FindCommand;
 import Command.ListCommand;
 import Command.StatusUpdateCommand;
 import Command.TodoCommand;
@@ -47,6 +48,10 @@ public class Nova {
             case "LIST":
                 Command listCommand = new ListCommand(toDoList, ui);
                 isSuccessful = listCommand.execute();
+                break;
+            case "FIND":
+                Command findCommand = new FindCommand(toDoList, ui, msg);
+                isSuccessful = findCommand.execute();
                 break;
             case "TODO":
                 try {

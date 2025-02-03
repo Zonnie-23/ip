@@ -89,6 +89,11 @@
     Now you have 6 tasks in the list.
     ____________________________________________________________
     ____________________________________________________________
+    Here are the matching tasks in your list:
+    1.[E][ ] project meeting (from: Aug 26 2024 14:00 to: Aug 26 2024 16:00)
+    2.[E][ ] project meeting (from: Feb 29 2024 18:00 to: Feb 29 2024 20:00)
+    ____________________________________________________________
+    ____________________________________________________________
     Do you want to save your todo list? Type "yes" to save
     Bye. Hope to see you again soon!
     ____________________________________________________________
