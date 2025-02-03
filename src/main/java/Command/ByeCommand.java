@@ -8,15 +8,15 @@ import java.util.Scanner;
 
 public class ByeCommand implements Command {
     private final TaskList toDoList;
+    private final UI ui;
     private final Storage storage;
     private final Scanner scanner;
-    private final UI ui;
 
-    public ByeCommand(TaskList toDoList, Storage storage, Scanner scanner, UI ui) {
+    public ByeCommand(TaskList toDoList, UI ui, Storage storage, Scanner scanner) {
         this.toDoList = toDoList;
+        this.ui = ui;
         this.storage = storage;
         this.scanner = scanner;
-        this.ui = ui;
     }
 
     @Override

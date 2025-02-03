@@ -40,60 +40,60 @@ public class Nova {
             ui.open();
 
             switch (msgParts[0].toUpperCase()) {
-            case "BYE":
-                Command byeCommand = new ByeCommand(toDoList, taskDataManager, scanner, ui);
-                isSuccessful = byeCommand.execute();
-                isActive = false;
+            case "HELP":
+                ui.displayMessages("I accept the following instructions:", COMMANDS.toString());
+                isSuccessful = true;
                 break;
             case "LIST":
                 Command listCommand = new ListCommand(toDoList, ui);
                 isSuccessful = listCommand.execute();
                 break;
-            case "MARK":
-                shouldMark = true;
-            case "UNMARK":
+            case "TODO":
                 try {
-                    Command markCommand = new StatusUpdateCommand(toDoList, msgParts, ui, shouldMark);
-                    isSuccessful = markCommand.execute();
+                    Command todoCommand = new TodoCommand(toDoList, ui, msg);
+                    isSuccessful = todoCommand.execute();
+                } catch (NovaException e) {
+                    System.out.println("    Error: " + e.getMessage());
+                }
+                break;
+            case "DEADLINE":
+                try {
+                    Command deadlineCommand = new DeadlineCommand(toDoList, ui, msg);
+                    isSuccessful = deadlineCommand.execute();
                 } catch (NovaException e){
                     System.out.println("    Error: " + e.getMessage());
                 }
                 break;
             case "EVENT":
                 try {
-                    Command eventCommand = new EventCommand(msg, toDoList, ui);
+                    Command eventCommand = new EventCommand(toDoList, ui, msg);
                     isSuccessful = eventCommand.execute();
                 } catch (NovaException e){
                     System.out.println("    Error: " + e.getMessage());
                 }
                 break;
-            case "DEADLINE":
+            case "MARK":
+                shouldMark = true;
+            case "UNMARK":
                 try {
-                    Command deadlineCommand = new DeadlineCommand(msg, toDoList, ui);
-                    isSuccessful = deadlineCommand.execute();
+                    Command markCommand = new StatusUpdateCommand(toDoList, ui, msgParts, shouldMark);
+                    isSuccessful = markCommand.execute();
                 } catch (NovaException e){
-                    System.out.println("    Error: " + e.getMessage());
-                }
-                break;
-            case "TODO":
-                try {
-                    Command todoCommand = new TodoCommand(msg, toDoList, ui);
-                    isSuccessful = todoCommand.execute();
-                } catch (NovaException e) {
                     System.out.println("    Error: " + e.getMessage());
                 }
                 break;
             case "DELETE":
                 try {
-                    Command deleteCommand = new DeleteCommand(toDoList, msgParts, ui);
+                    Command deleteCommand = new DeleteCommand(toDoList, ui, msgParts);
                     isSuccessful = deleteCommand.execute();
                 } catch (NovaException e){
                     System.out.println("    Error: " + e.getMessage());
                 }
                 break;
-            case "HELP":
-                ui.displayMessages("I accept the following instructions:", COMMANDS.toString());
-                isSuccessful = true;
+            case "BYE":
+                Command byeCommand = new ByeCommand(toDoList, ui, taskDataManager, scanner);
+                isSuccessful = byeCommand.execute();
+                isActive = false;
                 break;
             default:
                 try {

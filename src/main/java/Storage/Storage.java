@@ -67,11 +67,11 @@ public class Storage {
                 return new Todo(description, isDone);
             case "D":
                 LocalDateTime time = LocalDateTime.parse(parts[3]);
-                return new Deadline(description, isDone, time);
+                return new Deadline(description, time, isDone);
             case "E":
                 LocalDateTime startTime = LocalDateTime.parse(parts[3]);
                 LocalDateTime endTime = LocalDateTime.parse(parts[4]);
-                return new Event(description, isDone, startTime, endTime);
+                return new Event(description, startTime, endTime, isDone);
             default:
                 System.out.println("    Unknown task type: " + type);
                 return null;

@@ -14,7 +14,7 @@ public class Event extends Task {
         this.endTime = endTime;
     }
 
-    public Event(String description, boolean isDone, LocalDateTime startTime, LocalDateTime endTime) {
+    public Event(String description, LocalDateTime startTime, LocalDateTime endTime,  boolean isDone) {
         super(description, isDone);
         this.startTime = startTime;
         this.endTime = endTime;

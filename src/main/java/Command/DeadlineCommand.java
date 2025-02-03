@@ -11,12 +11,12 @@ import java.time.DateTimeException;
 import java.time.LocalDateTime;
 
 public class DeadlineCommand implements Command {
-    private LocalDateTime deadlineTime;
-    private String[] msgParts;
-    private TaskList toDoList;
-    private UI ui;
+    private final TaskList toDoList;
+    private final UI ui;
+    private final String[] msgParts;
+    private final LocalDateTime deadlineTime;
 
-    public DeadlineCommand(String instruction, TaskList toDoList, UI ui) throws NovaException {
+    public DeadlineCommand(TaskList toDoList, UI ui, String instruction) throws NovaException {
         this.toDoList = toDoList;
         this.ui = ui;
         this.msgParts = instruction.split(" /by ",2);
