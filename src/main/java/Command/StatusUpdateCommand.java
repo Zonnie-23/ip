@@ -6,11 +6,11 @@ import UI.UI;
 
 public class StatusUpdateCommand implements Command {
     private TaskList toDoList;
-    private int taskIndex;
     private UI ui;
+    private int taskIndex;
     private boolean isDone;
 
-    public StatusUpdateCommand(TaskList toDoList, String[] instruction, UI ui, boolean isDone) throws NovaException {
+    public StatusUpdateCommand(TaskList toDoList, UI ui, String[] instruction , boolean isDone) throws NovaException {
         this.ui = ui;
         this.toDoList = toDoList;
         if (instruction.length < 2) {

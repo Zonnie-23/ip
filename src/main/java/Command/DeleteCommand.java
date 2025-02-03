@@ -11,7 +11,7 @@ public class DeleteCommand implements Command {
     private int taskIndex;
 
 
-    public DeleteCommand(TaskList toDoList, String[] instruction, UI ui) throws NovaException {
+    public DeleteCommand(TaskList toDoList, UI ui, String[] instruction) throws NovaException {
         this.ui = ui;
         this.toDoList = toDoList;
         if (instruction.length < 2) {

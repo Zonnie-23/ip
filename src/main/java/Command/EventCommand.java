@@ -11,13 +11,13 @@ import java.time.DateTimeException;
 import java.time.LocalDateTime;
 
 public class EventCommand implements Command {
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
-    private String[] msgParts;
     private TaskList toDoList;
     private UI ui;
+    private String[] msgParts;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
 
-    public EventCommand(String instruction, TaskList toDoList, UI ui) throws NovaException {
+    public EventCommand(TaskList toDoList, UI ui, String instruction) throws NovaException {
         this.toDoList = toDoList;
         this.ui = ui;
         this.msgParts = instruction.split(" /from | /to ", 3);

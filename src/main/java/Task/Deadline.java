@@ -12,9 +12,9 @@ public class Deadline extends Task {
         this.dueTime = dueTime;
     }
 
-    public Deadline(String description, boolean isDone, LocalDateTime time) {
+    public Deadline(String description, LocalDateTime dueTime, boolean isDone) {
         super(description, isDone);
-        this.dueTime = time;
+        this.dueTime = dueTime;
     }
 
     @Override
