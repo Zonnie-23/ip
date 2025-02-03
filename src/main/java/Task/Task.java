@@ -37,6 +37,20 @@ public abstract class Task {
         isDone = done;
     }
 
+    /**
+     * Checks whether the task's description contains the specified keyword.
+     * <p>
+     * This method searches the task's description for the occurrence of the provided keyword.
+     * It returns {@code true} if the keyword is found within the description, and {@code false} otherwise.
+     * </p>
+     *
+     * @param keyword the keyword to search for within the description
+     * @return {@code true} if the description contains the keyword, {@code false} otherwise
+     */
+    public boolean contains(String keyword) {
+        return description.contains(keyword);
+    }
+
     @Override
     public String toString() {
         return "[" + getStatusIcon() + "] " + description;

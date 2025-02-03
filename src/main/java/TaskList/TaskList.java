@@ -1,5 +1,6 @@
 package TaskList;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import Task.Task;
@@ -9,6 +10,10 @@ import Task.Task;
  */
 public class TaskList {
     private List<Task> tasks;
+
+    public TaskList() {
+        this.tasks = new ArrayList<>();
+    }
 
     /**
      * Constructs a TaskList with the given list of tasks.

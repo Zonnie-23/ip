@@ -28,6 +28,7 @@ public class ListCommand implements Command {
      */
     @Override
     public boolean execute() {
+        ui.displayMessages("Here are the tasks in your list: ");
         ui.displayTasks(list);
         return true;
     }

@@ -15,5 +15,6 @@ unmark 4
 list
 rubbish
 delete 4
+find project
 bye
 no

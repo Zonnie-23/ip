@@ -40,9 +40,8 @@ public class Ui {
      */
     public void displayTasks(TaskList taskList) {
         List<Task> tasks = taskList.getTasks();
-        System.out.println("    Here are the tasks in your list: ");
-        for (int i = 0; i <= taskList.size(); i++) {
-            System.out.println("    " + (i - 1) + "." + tasks.get(i));
+        for (int i = 0; i < taskList.size(); i++) {
+            System.out.println("    " + (i + 1) + "." + tasks.get(i));
         }
     }
 
