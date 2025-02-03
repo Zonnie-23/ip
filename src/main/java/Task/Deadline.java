@@ -1,14 +1,15 @@
 package Task;
 
+import java.time.LocalDateTime;
+
 import Parser.Parser;
 
-import java.time.LocalDateTime;
 
 /**
  * Represent a task with a deadline.
  */
 public class Deadline extends Task {
-    private LocalDateTime dueTime;
+    private final LocalDateTime dueTime;
 
     /**
      * Initialises a new Deadline with the due date and time. Is automatically marked as incomplete.

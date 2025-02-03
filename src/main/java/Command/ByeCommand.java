@@ -1,10 +1,10 @@
 package Command;
 
+import java.util.Scanner;
+
 import Storage.Storage;
 import TaskList.TaskList;
 import Ui.Ui;
-
-import java.util.Scanner;
 
 public class ByeCommand implements Command {
     private final TaskList toDoList;

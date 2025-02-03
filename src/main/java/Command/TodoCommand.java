@@ -6,11 +6,22 @@ import Task.Todo;
 import TaskList.TaskList;
 import Ui.Ui;
 
+/**
+ * Command to add a todo task to the task list.
+ */
 public class TodoCommand implements Command{
     private TaskList toDoList;
     private Ui ui;
     private String description;
 
+    /**
+     * Constructs a new TodoCommand and verifies validity of inputs.
+     *
+     * @param toDoList    the task list to which the todo will be added.
+     * @param ui          the user interface for displaying messages.
+     * @param instruction the command instruction containing the task description.
+     * @throws NovaException if the description is empty.
+     */
     public TodoCommand(TaskList toDoList, Ui ui, String instruction) throws NovaException {
         this.toDoList = toDoList;
         this.ui = ui;
@@ -20,6 +31,11 @@ public class TodoCommand implements Command{
         }
     }
 
+    /**
+     * Executes the todo command by creating a new todo task and adding it to the task list.
+     *
+     * @return true if the task was added successfully.
+     */
     @Override
     public boolean execute() {
         Task todo = new Todo(this.description);

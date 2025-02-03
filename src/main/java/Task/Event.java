@@ -1,8 +1,8 @@
 package Task;
 
-import Parser.Parser;
-
 import java.time.LocalDateTime;
+
+import Parser.Parser;
 
 /**
  *  Represents an event task with a start time and an end time.
