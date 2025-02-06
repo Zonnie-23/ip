@@ -1,14 +1,14 @@
-package Command;
+package command;
 
 import java.time.DateTimeException;
 import java.time.LocalDateTime;
 
-import Exception.NovaException;
-import Parser.Parser;
-import Task.Deadline;
-import Task.Task;
-import TaskList.TaskList;
-import Ui.Ui;
+import exception.NovaException;
+import parser.Parser;
+import task.Deadline;
+import task.Task;
+import tasklist.TaskList;
+import ui.Ui;
 
 /**
  * Command to add a deadline task to the task list
@@ -30,7 +30,7 @@ public class DeadlineCommand implements Command {
     public DeadlineCommand(TaskList toDoList, Ui ui, String instruction) throws NovaException {
         this.toDoList = toDoList;
         this.ui = ui;
-        this.msgParts = instruction.split(" /by ",2);
+        this.msgParts = instruction.split(" /by ", 2);
         if (msgParts.length != 2) {
             throw new NovaException("Follow format: deadline <deadline description> /by <time>");
         }

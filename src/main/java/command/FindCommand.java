@@ -1,8 +1,8 @@
-package Command;
+package command;
 
-import Task.Task;
-import TaskList.TaskList;
-import Ui.Ui;
+import task.Task;
+import tasklist.TaskList;
+import ui.Ui;
 
 /**
  * Represents a command that searches for tasks containing a specific keyword.

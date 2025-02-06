@@ -1,8 +1,8 @@
-package Task;
+package task;
 
 import java.time.LocalDateTime;
 
-import Parser.Parser;
+import parser.Parser;
 
 /**
  *  Represents an event task with a start time and an end time.
@@ -33,7 +33,7 @@ public class Event extends Task {
      * @param endTime  End date and time of the event.
      * @param isDone Completion status.
      */
-    public Event(String description, LocalDateTime startTime, LocalDateTime endTime,  boolean isDone) {
+    public Event(String description, LocalDateTime startTime, LocalDateTime endTime, boolean isDone) {
         super(description, isDone);
         this.startTime = startTime;
         this.endTime = endTime;
@@ -41,7 +41,8 @@ public class Event extends Task {
 
     @Override
     public String toString() {
-        return String.format("[E]%s (from: %s to: %s)", super.toString(), Parser.outputDateTime(startTime), Parser.outputDateTime(endTime));
+        return String.format("[E]%s (from: %s to: %s)", super.toString(),
+                Parser.outputDateTime(startTime), Parser.outputDateTime(endTime));
     }
 
     /**

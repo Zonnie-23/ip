@@ -1,9 +1,9 @@
-package TaskList;
+package tasklist;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import Task.Task;
+import task.Task;
 
 /**
  * Represents a list of tasks.

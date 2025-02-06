@@ -1,9 +1,9 @@
-package Ui;
+package ui;
 
 import java.util.List;
 
-import Task.Task;
-import TaskList.TaskList;
+import task.Task;
+import tasklist.TaskList;
 
 public class Ui {
     private static final String HORIZONTAL_BAR = "    ____________________________________________________________";

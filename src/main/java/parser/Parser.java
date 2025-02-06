@@ -1,4 +1,4 @@
-package Parser;
+package parser;
 
 import java.time.DateTimeException;
 import java.time.LocalDate;

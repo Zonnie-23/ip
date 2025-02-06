@@ -1,7 +1,7 @@
-package Command;
+package command;
 
-import TaskList.TaskList;
-import Ui.Ui;
+import tasklist.TaskList;
+import ui.Ui;
 
 /**
  * Command to list all tasks in the task list.

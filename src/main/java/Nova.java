@@ -2,22 +2,23 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-import Command.ByeCommand;
-import Command.Command;
-import Command.DeadlineCommand;
-import Command.DeleteCommand;
-import Command.EventCommand;
-import Command.FindCommand;
-import Command.ListCommand;
-import Command.StatusUpdateCommand;
-import Command.TodoCommand;
-import Exception.NovaException;
-import Storage.Storage;
-import TaskList.TaskList;
-import Ui.Ui;
+import command.ByeCommand;
+import command.Command;
+import command.DeadlineCommand;
+import command.DeleteCommand;
+import command.EventCommand;
+import command.FindCommand;
+import command.ListCommand;
+import command.StatusUpdateCommand;
+import command.TodoCommand;
+import exception.NovaException;
+import storage.Storage;
+import tasklist.TaskList;
+import ui.Ui;
 
 public class Nova {
-    private static final List<String> COMMANDS = Arrays.asList("bye", "list", "mark", "unmark", "event", "deadline", "todo", "delete");
+    private static final List<String> COMMANDS =
+            Arrays.asList("bye", "list", "mark", "unmark", "event", "deadline", "todo", "delete");
 
     public static void main(String[] args) {
         // Initialise to-do list
@@ -65,7 +66,7 @@ public class Nova {
                 try {
                     Command deadlineCommand = new DeadlineCommand(toDoList, ui, msg);
                     isSuccessful = deadlineCommand.execute();
-                } catch (NovaException e){
+                } catch (NovaException e) {
                     System.out.println("    Error: " + e.getMessage());
                 }
                 break;
@@ -73,17 +74,18 @@ public class Nova {
                 try {
                     Command eventCommand = new EventCommand(toDoList, ui, msg);
                     isSuccessful = eventCommand.execute();
-                } catch (NovaException e){
+                } catch (NovaException e) {
                     System.out.println("    Error: " + e.getMessage());
                 }
                 break;
             case "MARK":
                 shouldMark = true;
+                // Fallthrough
             case "UNMARK":
                 try {
                     Command markCommand = new StatusUpdateCommand(toDoList, ui, msgParts, shouldMark);
                     isSuccessful = markCommand.execute();
-                } catch (NovaException e){
+                } catch (NovaException e) {
                     System.out.println("    Error: " + e.getMessage());
                 }
                 break;
@@ -91,7 +93,7 @@ public class Nova {
                 try {
                     Command deleteCommand = new DeleteCommand(toDoList, ui, msgParts);
                     isSuccessful = deleteCommand.execute();
-                } catch (NovaException e){
+                } catch (NovaException e) {
                     System.out.println("    Error: " + e.getMessage());
                 }
                 break;
@@ -104,10 +106,10 @@ public class Nova {
                 try {
                     ui.displayMessages("Sorry, I didn't understand your instructions. Please try again.");
                     throw new NovaException("Type help for list of commands.");
-                }  catch (NovaException e) {
+                } catch (NovaException e) {
                     System.out.println("    " + e.getMessage());
-                    // Default clause is meant to handle any unknown command, so if we reach this clause, then the handling
-                    // of the unknown instruction is successful
+                    // Default clause is meant to handle any unknown command, so if we reach this clause,
+                    // then the handling of the unknown instruction is successful
                     isSuccessful = true;
                 }
             }

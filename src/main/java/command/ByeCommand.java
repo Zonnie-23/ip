@@ -1,10 +1,10 @@
-package Command;
+package command;
 
 import java.util.Scanner;
 
-import Storage.Storage;
-import TaskList.TaskList;
-import Ui.Ui;
+import storage.Storage;
+import tasklist.TaskList;
+import ui.Ui;
 
 public class ByeCommand implements Command {
     private final TaskList toDoList;
@@ -15,7 +15,7 @@ public class ByeCommand implements Command {
     /**
      * Constructs a new ByeCommand instance.
      * <p>
-     * This constructor initializes the command with the necessary dependencies to handle the application's exit process.
+     * This constructor initializes the command with necessary dependencies to handle the application's exit process.
      * It accepts a task list (representing the current state of tasks), a user interface for message display,
      * a storage handler for saving tasks, and a scanner for reading user input.
      * </p>

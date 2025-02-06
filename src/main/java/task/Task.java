@@ -1,4 +1,4 @@
-package Task;
+package task;
 
 /**
  * Represents a general task with a description and a completion status.
@@ -62,7 +62,7 @@ public abstract class Task {
      * @return a CSV representation in the order "<completion status>,<description>".
      */
     public String toCsv() {
-        return String.format("%s,%s",(isDone ? "1" : "0"),description);
+        return String.format("%s,%s", (isDone ? "1" : "0"), description);
     }
 
     private String getStatusIcon() {
