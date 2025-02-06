@@ -1,4 +1,4 @@
-package Exception;
+package exception;
 
 /**
  * Exception thrown for errors specific to Nova.

@@ -1,9 +1,9 @@
-package Command;
+package command;
 
-import Exception.NovaException;
-import Task.Task;
-import TaskList.TaskList;
-import Ui.Ui;
+import exception.NovaException;
+import task.Task;
+import tasklist.TaskList;
+import ui.Ui;
 
 /**
  * Command to delete a task from the task list

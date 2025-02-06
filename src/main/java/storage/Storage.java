@@ -1,4 +1,4 @@
-package Storage;
+package storage;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -11,11 +11,11 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import Task.Deadline;
-import Task.Event;
-import Task.Task;
-import Task.Todo;
-import TaskList.TaskList;
+import task.Deadline;
+import task.Event;
+import task.Task;
+import task.Todo;
+import tasklist.TaskList;
 
 /**
  * Handles file-based storage operations for tasks.
