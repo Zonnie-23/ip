@@ -5,7 +5,6 @@ import tasklist.TaskList;
 import ui.Ui;
 
 /**
- *
  * Command for updating the completion status of a specific task in the task list.
  * <p>
  * This command modifies the status of a task (marking it as done or not done) based on a user-provided task number.
@@ -29,9 +28,11 @@ public class StatusUpdateCommand implements Command {
      *
      * @param toDoList   the task list containing the tasks to be updated.
      * @param ui         the user interface used for displaying messages to the user.
-     * @param instruction an array of strings representing the command details; the second element must be a valid task number.
+     * @param instruction an array of strings representing the command details;
+     *                    the second element must be a valid task number.
      * @param isDone     the new status for the task; {@code true} to mark as done, {@code false} to mark as not done.
-     * @throws NovaException if the instruction does not provide a valid task number or if the task number is not a valid integer.
+     * @throws NovaException if the instruction does not provide a valid task number
+     *                    or if the task number is not a valid integer.
      */
     public StatusUpdateCommand(TaskList toDoList, Ui ui, String[] instruction , boolean isDone) throws NovaException {
         this.ui = ui;
@@ -62,12 +63,13 @@ public class StatusUpdateCommand implements Command {
             // Check if there exists a next input and is a integer
             if (taskIndex >= 0 && taskIndex < toDoList.size()) {
                 toDoList.getTask(taskIndex).setStatus(isDone);
-                ui.displayMessages("Nice! I've marked this task as done:", "  " + toDoList.getTask(taskIndex).toString());
+                ui.displayMessages("Nice! I've marked this task as done:", "  "
+                        + toDoList.getTask(taskIndex).toString());
             } else {
                 throw new NovaException("Index is out of range!");
             }
             return true;
-        } catch (NovaException e){
+        } catch (NovaException e) {
             System.out.println("    Error: " + e.getMessage());
             return false;
         }

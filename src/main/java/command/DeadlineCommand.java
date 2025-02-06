@@ -30,7 +30,7 @@ public class DeadlineCommand implements Command {
     public DeadlineCommand(TaskList toDoList, Ui ui, String instruction) throws NovaException {
         this.toDoList = toDoList;
         this.ui = ui;
-        this.msgParts = instruction.split(" /by ",2);
+        this.msgParts = instruction.split(" /by ", 2);
         if (msgParts.length != 2) {
             throw new NovaException("Follow format: deadline <deadline description> /by <time>");
         }

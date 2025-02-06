@@ -9,7 +9,7 @@ import ui.Ui;
 /**
  * Command to add a todo task to the task list.
  */
-public class TodoCommand implements Command{
+public class TodoCommand implements Command {
     private TaskList toDoList;
     private Ui ui;
     private String description;

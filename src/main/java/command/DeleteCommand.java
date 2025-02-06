@@ -53,6 +53,6 @@ public class DeleteCommand implements Command {
         } catch (NovaException e) {
             System.out.println("    Error: " + e.getMessage());
             return false;
-            }
+        }
     }
 }
