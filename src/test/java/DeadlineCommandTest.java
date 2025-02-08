@@ -6,10 +6,10 @@ import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
-import command.DeadlineCommand;
-import exception.NovaException;
-import tasklist.TaskList;
-import ui.Ui;
+import nova.command.DeadlineCommand;
+import nova.exception.NovaException;
+import nova.tasklist.TaskList;
+import nova.ui.Ui;
 
 public class DeadlineCommandTest {
     @Test
