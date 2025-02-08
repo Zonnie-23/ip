@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 import org.junit.jupiter.api.Test;
 
-import task.Event;
+import nova.task.Event;
 
 public class EventTest {
     @Test

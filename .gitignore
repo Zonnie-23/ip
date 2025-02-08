@@ -16,5 +16,5 @@ bin/
 # Data files
 data/
 
-/text-ui-test/ACTUAL.TXT
-text-ui-test/EXPECTED-UNIX.TXT
+/text-nova.ui-test/ACTUAL.TXT
+text-nova.ui-test/EXPECTED-UNIX.TXT

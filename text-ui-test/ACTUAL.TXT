@@ -36,7 +36,7 @@
     Now you have 5 tasks in the list.
     ____________________________________________________________
     ____________________________________________________________
-    Here are the tasks in your list:
+    Here are the tasks in your list: 
     1.[T][X] read book
     2.[D][ ] return book (by: Jun 06 2024 23:59)
     3.[E][ ] project meeting (from: Aug 26 2024 14:00 to: Aug 26 2024 16:00)
@@ -70,7 +70,7 @@
       [T][ ] join sports club
     ____________________________________________________________
     ____________________________________________________________
-    Here are the tasks in your list:
+    Here are the tasks in your list: 
     1.[T][X] read book
     2.[D][ ] return book (by: Jun 06 2024 23:59)
     3.[E][ ] project meeting (from: Aug 26 2024 14:00 to: Aug 26 2024 16:00)
@@ -89,7 +89,7 @@
     Now you have 6 tasks in the list.
     ____________________________________________________________
     ____________________________________________________________
-    Here are the matching tasks in your list:
+    Here are the matching tasks in your list: 
     1.[E][ ] project meeting (from: Aug 26 2024 14:00 to: Aug 26 2024 16:00)
     2.[E][ ] project meeting (from: Feb 29 2024 18:00 to: Feb 29 2024 20:00)
     ____________________________________________________________
