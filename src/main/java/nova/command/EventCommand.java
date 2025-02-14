@@ -50,6 +50,7 @@ public class EventCommand implements Command {
      */
     @Override
     public boolean execute() {
+        assert instruction[0].equalsIgnoreCase("event");
         Task event = new Event(instruction[0].substring("event".length() + 1), startTime, endTime);
         toDoList.addTask(event);
         ui.addMessages("Got it. I've added this task:" , "  " + event);

@@ -25,6 +25,7 @@ public class DeleteCommand implements Command {
     public DeleteCommand(TaskList toDoList, Ui ui, String[] instruction) throws NovaException {
         this.ui = ui;
         this.toDoList = toDoList;
+        assert instruction.length <= 2;
         if (instruction.length < 2) {
             throw new NovaException("Please specify a task number to mark!");
         }

@@ -15,7 +15,7 @@ import nova.ui.Ui;
 public class DeadlineCommand implements Command {
     private final TaskList toDoList;
     private final Ui ui;
-    private final String[] msgParts;
+    private final String[] instruction;
     private final LocalDateTime deadlineTime;
 
     /**
@@ -29,12 +29,13 @@ public class DeadlineCommand implements Command {
     public DeadlineCommand(TaskList toDoList, Ui ui, String instruction) throws NovaException {
         this.toDoList = toDoList;
         this.ui = ui;
-        this.msgParts = instruction.split(" /by ", 2);
-        if (msgParts.length != 2) {
+        this.instruction = instruction.split(" /by ", 2);
+        if (this.instruction.length != 2) {
             throw new NovaException("Follow format: deadline <deadline description> /by <time>");
         }
+        assert this.instruction[0].equalsIgnoreCase("deadline");
         try {
-            this.deadlineTime = Parser.parseDateTime(msgParts[1]);
+            this.deadlineTime = Parser.parseDateTime(this.instruction[1]);
         } catch (NovaException e) {
             throw new NovaException("Invalid deadline time: " + e.getMessage());
         }
@@ -48,7 +49,7 @@ public class DeadlineCommand implements Command {
      */
     @Override
     public boolean execute() {
-        Task event = new Deadline(msgParts[0].substring("deadline".length() + 1), deadlineTime);
+        Task event = new Deadline(instruction[0].substring("deadline".length() + 1), deadlineTime);
         toDoList.addTask(event);
         ui.addMessages("Got it. I've added this task:" , "  " + event);
         ui.addMessages(String.format("Now you have %d tasks in the list.", toDoList.size()));

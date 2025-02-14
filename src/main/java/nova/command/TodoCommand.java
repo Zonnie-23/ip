@@ -25,6 +25,7 @@ public class TodoCommand implements Command {
     public TodoCommand(TaskList toDoList, Ui ui, String instruction) throws NovaException {
         this.toDoList = toDoList;
         this.ui = ui;
+        assert instruction != null;
         this.description = instruction.substring("todo".length() + 1);
         if (this.description.isEmpty()) {
             throw new NovaException("Follow format: todo <todo description>");
