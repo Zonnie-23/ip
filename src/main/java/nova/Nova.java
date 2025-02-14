@@ -9,6 +9,7 @@ import nova.command.DeadlineCommand;
 import nova.command.DeleteCommand;
 import nova.command.EventCommand;
 import nova.command.FindCommand;
+import nova.command.HelpCommand;
 import nova.command.ListCommand;
 import nova.command.SaveCommand;
 import nova.command.StatusUpdateCommand;
@@ -20,7 +21,7 @@ import nova.ui.Ui;
 
 public class Nova {
     private static final List<String> COMMANDS =
-            Arrays.asList("bye", "list", "mark", "unmark", "event", "deadline", "todo", "delete");
+            Arrays.asList("bye", "save", "list", "mark", "unmark", "event", "deadline", "todo", "delete");
 
     private Storage taskDataManager = new Storage("./data/task.csv");
     private TaskList toDoList = new TaskList(taskDataManager.loadTask());
@@ -39,71 +40,86 @@ public class Nova {
             isSuccessful = true;
             break;
         case "LIST":
-            Command listCommand = new ListCommand(toDoList, ui);
-            isSuccessful = listCommand.execute();
+            currCommand = new ListCommand(toDoList, ui);
+            isSuccessful = currCommand.execute();
             break;
         case "FIND":
-            Command findCommand = new FindCommand(toDoList, ui, command);
-            isSuccessful = findCommand.execute();
+            currCommand = new FindCommand(toDoList, ui, command);
+            isSuccessful = currCommand.execute();
             break;
+
         case "TODO":
             try {
-                Command todoCommand = new TodoCommand(toDoList, ui, command);
-                isSuccessful = todoCommand.execute();
+                currCommand = new TodoCommand(toDoList, ui, command);
+                isSuccessful = currCommand.execute();
             } catch (NovaException e) {
                 ui.addMessages("Error: " + e.getMessage());
             }
             break;
+
         case "DEADLINE":
             try {
-                Command deadlineCommand = new DeadlineCommand(toDoList, ui, command);
-                isSuccessful = deadlineCommand.execute();
+                currCommand = new DeadlineCommand(toDoList, ui, command);
+                isSuccessful = currCommand.execute();
             } catch (NovaException e) {
                 ui.addMessages("Error: " + e.getMessage());
             }
             break;
+
         case "EVENT":
             try {
-                Command eventCommand = new EventCommand(toDoList, ui, command);
-                isSuccessful = eventCommand.execute();
+                currCommand = new EventCommand(toDoList, ui, command);
+                isSuccessful = currCommand.execute();
             } catch (NovaException e) {
                 ui.addMessages("Error: " + e.getMessage());
             }
             break;
+
         case "MARK":
             shouldMark = true;
             // Fallthrough
         case "UNMARK":
             try {
-                Command markCommand = new StatusUpdateCommand(toDoList, ui, msgParts, shouldMark);
-                isSuccessful = markCommand.execute();
+                currCommand = new StatusUpdateCommand(toDoList, ui, msgParts, shouldMark);
+                isSuccessful = currCommand.execute();
             } catch (NovaException e) {
                 ui.addMessages("Error: " + e.getMessage());
             }
             break;
+
         case "DELETE":
             try {
-                Command deleteCommand = new DeleteCommand(toDoList, ui, msgParts);
-                isSuccessful = deleteCommand.execute();
+                currCommand = new DeleteCommand(toDoList, ui, msgParts);
+                isSuccessful = currCommand.execute();
             } catch (NovaException e) {
                 ui.addMessages("Error: " + e.getMessage());
             }
             break;
+
+        case "SAVE":
+            boolean toExit = currCommand instanceof ByeCommand;
+            currCommand = new SaveCommand(toDoList, ui, taskDataManager, toExit);
+            isSuccessful = currCommand.execute();
+            isActive = !((SaveCommand) currCommand).isExiting();
+            if (!isActive) {
+                ui.addMessages("Hope to see you again soon");
+            }
+            break;
+
         case "BYE":
             currCommand = new ByeCommand(ui);
             isSuccessful = currCommand.execute();
             break;
+
         default:
             // To check if the command is a response to byeCommand checking if user wants to save
-            if (currCommand != null && currCommand instanceof ByeCommand) {
-                if (!msgParts[0].equalsIgnoreCase("no")) {
-                    currCommand = new SaveCommand(toDoList, ui, taskDataManager);
-                    isSuccessful = currCommand.execute();
-                }
+            if (currCommand != null && currCommand instanceof ByeCommand && msgParts[0].equalsIgnoreCase("no")) {
                 ui.addMessages("Bye. Hope to see you again soon!");
                 this.isActive = false;
+                isSuccessful = true;
                 break;
             }
+
             try {
                 ui.addMessages("Sorry, I didn't understand your instructions. Please try again.");
                 throw new NovaException("Type help for list of commands.");
