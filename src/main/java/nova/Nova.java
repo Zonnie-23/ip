@@ -8,7 +8,9 @@ import nova.command.Command;
 import nova.command.DeadlineCommand;
 import nova.command.DeleteCommand;
 import nova.command.EventCommand;
+import nova.command.ExitCommand;
 import nova.command.FindCommand;
+import nova.command.HelpCommand;
 import nova.command.ListCommand;
 import nova.command.SaveCommand;
 import nova.command.StatusUpdateCommand;
@@ -20,7 +22,7 @@ import nova.ui.Ui;
 
 public class Nova {
     private static final List<String> COMMANDS =
-            Arrays.asList("bye", "list", "mark", "unmark", "event", "deadline", "todo", "delete");
+            Arrays.asList("bye", "save", "list", "mark", "unmark", "event", "deadline", "todo", "delete");
 
     private Storage taskDataManager = new Storage("./data/task.csv");
     private TaskList toDoList = new TaskList(taskDataManager.loadTask());
@@ -29,96 +31,64 @@ public class Nova {
     private Command currCommand;
 
     private Boolean read(String command) {
-        String[] msgParts = command.split("\\s+");
-        boolean shouldMark = false;
-        boolean isSuccessful = false;
+        try {
+            currCommand = parseCommand(command);
+            boolean isSuccessful = currCommand.execute();
+            if (!isSuccessful) {
+                ui.addMessages("Please try again.");
+            }
 
-        switch (msgParts[0].toUpperCase()) {
-        case "HELP":
-            ui.addMessages("I accept the following instructions:", COMMANDS.toString());
-            isSuccessful = true;
-            break;
-        case "LIST":
-            Command listCommand = new ListCommand(toDoList, ui);
-            isSuccessful = listCommand.execute();
-            break;
-        case "FIND":
-            Command findCommand = new FindCommand(toDoList, ui, command);
-            isSuccessful = findCommand.execute();
-            break;
-        case "TODO":
-            try {
-                Command todoCommand = new TodoCommand(toDoList, ui, command);
-                isSuccessful = todoCommand.execute();
-            } catch (NovaException e) {
-                ui.addMessages("Error: " + e.getMessage());
-            }
-            break;
-        case "DEADLINE":
-            try {
-                Command deadlineCommand = new DeadlineCommand(toDoList, ui, command);
-                isSuccessful = deadlineCommand.execute();
-            } catch (NovaException e) {
-                ui.addMessages("Error: " + e.getMessage());
-            }
-            break;
-        case "EVENT":
-            try {
-                Command eventCommand = new EventCommand(toDoList, ui, command);
-                isSuccessful = eventCommand.execute();
-            } catch (NovaException e) {
-                ui.addMessages("Error: " + e.getMessage());
-            }
-            break;
-        case "MARK":
-            shouldMark = true;
-            // Fallthrough
-        case "UNMARK":
-            try {
-                Command markCommand = new StatusUpdateCommand(toDoList, ui, msgParts, shouldMark);
-                isSuccessful = markCommand.execute();
-            } catch (NovaException e) {
-                ui.addMessages("Error: " + e.getMessage());
-            }
-            break;
-        case "DELETE":
-            try {
-                Command deleteCommand = new DeleteCommand(toDoList, ui, msgParts);
-                isSuccessful = deleteCommand.execute();
-            } catch (NovaException e) {
-                ui.addMessages("Error: " + e.getMessage());
-            }
-            break;
-        case "BYE":
-            currCommand = new ByeCommand(ui);
-            isSuccessful = currCommand.execute();
-            break;
-        default:
-            // To check if the command is a response to byeCommand checking if user wants to save
-            if (currCommand != null && currCommand instanceof ByeCommand) {
-                if (!msgParts[0].equalsIgnoreCase("no")) {
-                    currCommand = new SaveCommand(toDoList, ui, taskDataManager);
-                    isSuccessful = currCommand.execute();
+            // Special handling for exiting if needed
+            if (currCommand instanceof SaveCommand) {
+                isActive = !((SaveCommand) currCommand).isExiting();
+                if (!isActive) {
+                    ui.addMessages("Hope to see you again soon");
                 }
-                ui.addMessages("Bye. Hope to see you again soon!");
-                this.isActive = false;
-                break;
+            } else if (currCommand instanceof ExitCommand) {
+                // When an ExitCommand is executed, we set isActive to false
+                isActive = false;
             }
-            try {
-                ui.addMessages("Sorry, I didn't understand your instructions. Please try again.");
-                throw new NovaException("Type help for list of commands.");
-            } catch (NovaException e) {
-                ui.addMessages(e.getMessage());
-                // Default clause is meant to handle any unknown command, so if we reach this clause,
-                // then the handling of the unknown instruction is successful
-                isSuccessful = true;
-            }
-        }
-        if (!isSuccessful) {
-            // To inform user that command is found but execution is unsuccessful
-            ui.addMessages("Please try again.");
+        } catch (NovaException e) {
+            ui.addMessages("Error: " + e.getMessage());
         }
         return true;
+    }
+
+    private Command parseCommand(String command) throws NovaException {
+        String[] msgParts = command.split("\\s+");
+        String cmdWord = msgParts[0].toUpperCase();
+        switch (cmdWord) {
+        case "HELP":
+            return new HelpCommand(ui, COMMANDS); // for example, a new command for help
+        case "LIST":
+            return new ListCommand(toDoList, ui);
+        case "FIND":
+            return new FindCommand(toDoList, ui, command);
+        case "TODO":
+            return new TodoCommand(toDoList, ui, command);
+        case "DEADLINE":
+            return new DeadlineCommand(toDoList, ui, command);
+        case "EVENT":
+            return new EventCommand(toDoList, ui, command);
+        case "MARK":
+            return new StatusUpdateCommand(toDoList, ui, msgParts, true);
+        case "UNMARK":
+            return new StatusUpdateCommand(toDoList, ui, msgParts, false);
+        case "DELETE":
+            return new DeleteCommand(toDoList, ui, msgParts);
+        case "SAVE":
+            boolean toExit = currCommand instanceof ByeCommand;
+            return new SaveCommand(toDoList, ui, taskDataManager, toExit);
+        case "BYE":
+            return new ByeCommand(ui);
+        default:
+            // Special handling: if the last command was BYE and user enters "no"
+            if (currCommand instanceof ByeCommand && cmdWord.equalsIgnoreCase("no")) {
+                return new ExitCommand(ui); // a command that handles exit logic
+            }
+            ui.addMessages("Sorry, I didn't understand your instructions.", "Please try again.");
+            throw new NovaException("Type help for list of commands.");
+        }
     }
 
     /**

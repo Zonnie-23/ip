@@ -1,5 +1,6 @@
 package nova;
 
+import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
@@ -7,8 +8,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import nova.ui.DialogBox;
 import javafx.stage.Stage;
+import javafx.util.Duration;
+import nova.ui.DialogBox;
 
 /**
  * Controller for the main GUI.
@@ -56,8 +58,17 @@ public class MainWindow extends AnchorPane {
         );
         userInput.clear();
         if (!nova.isActive()) {
+            closeAfterDelay();
+        }
+    }
+
+    private void closeAfterDelay() {
+        PauseTransition delay = new PauseTransition(Duration.seconds(1)); // wait 3 seconds
+        delay.setOnFinished(event -> {
+            // Get the stage from any node in the scene
             Stage stage = (Stage) dialogContainer.getScene().getWindow();
             stage.close();
-        }
+        });
+        delay.play();
     }
 }
