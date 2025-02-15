@@ -37,8 +37,23 @@ public class Parser {
         }
     }
 
+    public static LocalDate parseDate(String date) throws NovaException {
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        String[] components = date.split("\\s+");
+        try {
+            if (components.length == 1) {
+                return LocalDate.parse(date, dateFormat);
+            } else {
+                throw new DateTimeException("Invalid date format");
+            }
+        } catch (DateTimeException e) {
+            throw new NovaException("Invalid date format: Expected \"yyyy-MM-dd\"");
+        }
+    }
+
     /**
-     * Formats into a human-readable string.
+     * Formats specific time into a human-readable string.
      *
      * @param localDateTime the LocalDateTime object to format
      * @return a formatted string representing the date and time.
@@ -46,5 +61,19 @@ public class Parser {
     public static String outputDateTime(LocalDateTime localDateTime) {
         DateTimeFormatter outputDateTimeFormat = DateTimeFormatter.ofPattern("MMM dd yyyy HH:mm");
         return localDateTime.format(outputDateTimeFormat);
+    }
+
+    /**
+     * Formats date into a human-readable string.
+     *
+     * @param localDate the LocalDate object to format
+     * @return a formatted string representing the date.
+     */
+    public static String outputDate(LocalDate localDate) {
+        if (localDate.isEqual(LocalDate.now())) {
+            return "today";
+        }
+        DateTimeFormatter outputDateTimeFormat = DateTimeFormatter.ofPattern("MMM dd yyyy");
+        return localDate.format(outputDateTimeFormat);
     }
 }

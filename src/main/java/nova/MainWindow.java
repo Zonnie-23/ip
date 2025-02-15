@@ -28,7 +28,7 @@ public class MainWindow extends AnchorPane {
     private Nova nova;
 
     private Image userImage = new Image(this.getClass().getResourceAsStream("/images/DaUser.png"));
-    private Image novaImage = new Image(this.getClass().getResourceAsStream("/images/DaDuke.png"));
+    private Image novaImage = new Image(this.getClass().getResourceAsStream("/images/DaNovaBot.png"));
 
     @FXML
     public void initialize() {
@@ -38,9 +38,10 @@ public class MainWindow extends AnchorPane {
     /** Injects the Nova instance */
     public void setNova(Nova nova) {
         this.nova = nova;
-        String response = this.nova.getInitialMessage();
+        String[] response = this.nova.getInitialMessage();
         dialogContainer.getChildren().addAll(
-                DialogBox.getNovaDialog(response, novaImage)
+                DialogBox.getNovaDialog(response[0], novaImage),
+                DialogBox.getNovaDialog(response[1], novaImage)
         );
     }
 

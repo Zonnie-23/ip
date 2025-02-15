@@ -13,7 +13,9 @@ import nova.command.FindCommand;
 import nova.command.HelpCommand;
 import nova.command.ListCommand;
 import nova.command.SaveCommand;
+import nova.command.ScheduleCommand;
 import nova.command.StatusUpdateCommand;
+import nova.command.TodayCommand;
 import nova.command.TodoCommand;
 import nova.exception.NovaException;
 import nova.storage.Storage;
@@ -64,18 +66,23 @@ public class Nova {
             return new ListCommand(toDoList, ui);
         case "FIND":
             return new FindCommand(toDoList, ui, command);
+        case "SCHEDULE":
+            return new ScheduleCommand(ui, toDoList, command);
+
         case "TODO":
             return new TodoCommand(toDoList, ui, command);
         case "DEADLINE":
             return new DeadlineCommand(toDoList, ui, command);
         case "EVENT":
             return new EventCommand(toDoList, ui, command);
+
         case "MARK":
             return new StatusUpdateCommand(toDoList, ui, msgParts, true);
         case "UNMARK":
             return new StatusUpdateCommand(toDoList, ui, msgParts, false);
         case "DELETE":
             return new DeleteCommand(toDoList, ui, msgParts);
+
         case "SAVE":
             boolean toExit = currCommand instanceof ByeCommand;
             return new SaveCommand(toDoList, ui, taskDataManager, toExit);
@@ -100,8 +107,15 @@ public class Nova {
         return ui.generateResponse();
     }
 
-    public String getInitialMessage() {
-        return "Hello! I'm Nova.\nWhat can I do for you?";
+    public String[] getInitialMessage() {
+        this.ui.addMessages("Hello! I'm Nova.");
+        try {
+            currCommand = new TodayCommand(ui, toDoList);
+            this.currCommand.execute();
+        } catch (Exception e) {
+            ui.addMessages("Unable to display tasks for today.");
+        }
+        return new String[]{ui.generateResponse(), "What can I do for you?"};
     }
 
     public boolean isActive() {

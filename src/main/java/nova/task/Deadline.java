@@ -35,6 +35,10 @@ public class Deadline extends Task {
         this.dueTime = dueTime;
     }
 
+    public LocalDateTime getDueTime() {
+        return dueTime;
+    }
+
     @Override
     public String toString() {
         return String.format("[D]%s (by: %s)", super.toString(), Parser.outputDateTime(dueTime));
