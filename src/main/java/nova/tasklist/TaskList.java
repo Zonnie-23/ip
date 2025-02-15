@@ -1,6 +1,7 @@
 package nova.tasklist;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import nova.task.Task;
@@ -55,6 +56,10 @@ public class TaskList {
 
     public int size() {
         return this.tasks.size();
+    }
+
+    public void sort() {
+        tasks.sort(Comparator.comparing(Task::getDateTime, Comparator.nullsLast(Comparator.naturalOrder())));
     }
 
     public List<Task> getTasks() {

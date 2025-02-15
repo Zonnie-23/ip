@@ -1,6 +1,5 @@
 package nova;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import nova.task.Deadline;
@@ -23,8 +22,8 @@ public class Scheduling {
     }
 
     private static Boolean isEventToday(Task task, LocalDateTime date) {
-        boolean isStartingLaterToday = ((Event) task).getStartTime().isAfter(date) &&
-                ((Event) task).getStartTime().toLocalDate().isEqual(date.toLocalDate());
+        boolean isStartingLaterToday = ((Event) task).getStartTime().isAfter(date)
+                && ((Event) task).getStartTime().toLocalDate().isEqual(date.toLocalDate());
         boolean hasStarted = ((Event) task).getStartTime().isBefore(date);
         boolean hasNotEnded = ((Event) task).getEndTime().isAfter(date);
         return isStartingLaterToday || (hasStarted && hasNotEnded);

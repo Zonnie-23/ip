@@ -4,12 +4,12 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
+import nova.Scheduling;
 import nova.exception.NovaException;
 import nova.parser.Parser;
 import nova.task.Task;
 import nova.tasklist.TaskList;
 import nova.ui.Ui;
-import nova.Scheduling;
 
 public class ScheduleCommand implements Command {
     private Ui ui;
@@ -46,10 +46,13 @@ public class ScheduleCommand implements Command {
         }
 
         if (tasksToday.size() == 0) {
-            ui.addMessages(String.format("There are no tasks for %s.", Parser.outputDate(targetDateTime.toLocalDate())));
+            ui.addMessages(String.format("There are no tasks for %s.",
+                    Parser.outputDate(targetDateTime.toLocalDate())));
             return true;
         } else {
-            ui.addMessages(String.format("Here are your tasks for %s:", Parser.outputDate(targetDateTime.toLocalDate())));
+            ui.addMessages(String.format("Here are your tasks for %s:",
+                    Parser.outputDate(targetDateTime.toLocalDate())));
+            tasksToday.sort();
             ui.displayTasks(tasksToday);
             return true;
         }

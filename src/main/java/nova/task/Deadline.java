@@ -22,7 +22,6 @@ public class Deadline extends Task {
         this.dueTime = dueTime;
     }
 
-
     /**
      * Constructs a Deadline object from retrieved saved information.
      *
@@ -36,6 +35,11 @@ public class Deadline extends Task {
     }
 
     public LocalDateTime getDueTime() {
+        return dueTime;
+    }
+
+    @Override
+    public LocalDateTime getDateTime() {
         return dueTime;
     }
 

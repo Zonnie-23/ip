@@ -1,5 +1,7 @@
 package nova.task;
 
+import java.time.LocalDateTime;
+
 /**
  * Represents a simple Todo task.
  */
@@ -21,6 +23,11 @@ public class Todo extends Task {
      */
     public Todo(String description, boolean isDone) {
         super(description, isDone);
+    }
+
+    @Override
+    public LocalDateTime getDateTime() {
+        return null;
     }
 
     @Override

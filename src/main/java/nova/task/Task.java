@@ -1,5 +1,7 @@
 package nova.task;
 
+import java.time.LocalDateTime;
+
 /**
  * Represents a gentask with a description and a completion status.
  */
@@ -50,6 +52,8 @@ public abstract class Task {
     public boolean contains(String keyword) {
         return description.contains(keyword);
     }
+
+    public abstract LocalDateTime getDateTime();
 
     @Override
     public String toString() {
