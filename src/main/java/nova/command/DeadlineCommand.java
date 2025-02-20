@@ -33,7 +33,7 @@ public class DeadlineCommand implements Command {
         if (this.instruction.length != 2) {
             throw new NovaException("Follow format: deadline <deadline description> /by <time>");
         }
-        assert this.instruction[0].equalsIgnoreCase("deadline");
+        assert this.instruction[0].startsWith("deadline");
         try {
             this.deadlineTime = Parser.parseDateTime(this.instruction[1]);
         } catch (NovaException e) {
@@ -49,10 +49,17 @@ public class DeadlineCommand implements Command {
      */
     @Override
     public boolean execute() {
-        Task event = new Deadline(instruction[0].substring("deadline".length() + 1), deadlineTime);
+        Task event;
+        try {
+            event = new Deadline(instruction[0].substring("deadline".length() + 1), deadlineTime);
+        } catch (IndexOutOfBoundsException e) {
+            ui.addMessages("Unable to parse deadline " + e.getMessage());
+            return false;
+        }
+
         toDoList.addTask(event);
-        ui.addMessages("Got it. I've added this task:" , "  " + event);
-        ui.addMessages(String.format("Now you have %d tasks in the list.", toDoList.size()));
+        ui.addMessages("Got it. I've added this task:", "  " + event);
+        ui.addMessages(String.format("Now you have %d task(s) in the list.", toDoList.size()));
         return true;
     }
 }

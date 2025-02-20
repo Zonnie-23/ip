@@ -63,8 +63,7 @@ public class StatusUpdateCommand implements Command {
             // Check if there exists a next input and is a integer
             if (taskIndex >= 0 && taskIndex < toDoList.size()) {
                 toDoList.getTask(taskIndex).setStatus(isDone);
-                ui.addMessages("Nice! I've marked this task as done:", "  "
-                        + toDoList.getTask(taskIndex).toString());
+                addMessage();
             } else {
                 throw new NovaException("Index is out of range!");
             }
@@ -72,6 +71,16 @@ public class StatusUpdateCommand implements Command {
         } catch (NovaException e) {
             ui.addMessages("Error: " + e.getMessage());
             return false;
+        }
+    }
+
+    private void addMessage() {
+        if (isDone) {
+            ui.addMessages("Nice! I've marked this task as done:", "  "
+                    + toDoList.getTask(taskIndex).toString());
+        } else {
+            ui.addMessages("Nice! I've unmarked this task:", "  "
+                    + toDoList.getTask(taskIndex).toString());
         }
     }
 }

@@ -32,7 +32,7 @@ public class ByeCommand implements Command {
      */
     @Override
     public boolean execute() {
-        ui.addMessages("Do you want to save? Type \"save\" to save the current list. Otherwise, type \"no\" to quit.");
+        ui.addMessages("Do you want to save? Type \"save\" to save your current list. Otherwise, type \"no\" to quit.");
         return true;
     }
 }

@@ -24,11 +24,11 @@ import nova.ui.Ui;
 
 public class Nova {
     private static final List<String> COMMANDS =
-            Arrays.asList("bye", "save", "list", "mark", "unmark", "event", "deadline", "todo", "delete");
+            Arrays.asList("bye", "save", "list", "mark", "unmark", "event", "deadline", "todo", "delete", "find", "schedule");
 
-    private Storage taskDataManager = new Storage("./data/task.csv");
-    private TaskList toDoList = new TaskList(taskDataManager.loadTask());
     private Ui ui = new Ui();
+    private Storage taskDataManager = new Storage("./data/task.csv", ui);
+    private TaskList toDoList = new TaskList(taskDataManager.loadTask());
     private boolean isActive = true;
     private Command currCommand;
 
@@ -58,35 +58,35 @@ public class Nova {
 
     private Command parseCommand(String command) throws NovaException {
         String[] msgParts = command.split("\\s+");
-        String cmdWord = msgParts[0].toUpperCase();
+        String cmdWord = msgParts[0];
         switch (cmdWord) {
-        case "HELP":
+        case "help":
             return new HelpCommand(ui, COMMANDS); // for example, a new command for help
-        case "LIST":
+        case "list":
             return new ListCommand(toDoList, ui);
-        case "FIND":
+        case "find":
             return new FindCommand(toDoList, ui, command);
-        case "SCHEDULE":
+        case "schedule":
             return new ScheduleCommand(ui, toDoList, command);
 
-        case "TODO":
+        case "todo":
             return new TodoCommand(toDoList, ui, command);
-        case "DEADLINE":
+        case "deadline":
             return new DeadlineCommand(toDoList, ui, command);
-        case "EVENT":
+        case "event":
             return new EventCommand(toDoList, ui, command);
 
-        case "MARK":
+        case "mark":
             return new StatusUpdateCommand(toDoList, ui, msgParts, true);
-        case "UNMARK":
+        case "unmark":
             return new StatusUpdateCommand(toDoList, ui, msgParts, false);
-        case "DELETE":
+        case "delete":
             return new DeleteCommand(toDoList, ui, msgParts);
 
-        case "SAVE":
+        case "save":
             boolean toExit = currCommand instanceof ByeCommand;
             return new SaveCommand(toDoList, ui, taskDataManager, toExit);
-        case "BYE":
+        case "bye":
             return new ByeCommand(ui);
         default:
             // Special handling: if the last command was BYE and user enters "no"
@@ -94,7 +94,7 @@ public class Nova {
                 return new ExitCommand(ui); // a command that handles exit logic
             }
             ui.addMessages("Sorry, I didn't understand your instructions.", "Please try again.");
-            throw new NovaException("Type help for list of commands.");
+            throw new NovaException("Type \"help\" for list of commands.");
         }
     }
 

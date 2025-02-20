@@ -25,10 +25,54 @@ public class DeadlineCommandTest {
     }
 
     @Test
-    public void testInvalidDeadlineFormat() throws NovaException {
+    public void testValidDeadlineFormat2() throws NovaException {
+        TaskList taskList = new TaskList(new ArrayList<>());
+        Ui ui = new Ui();
+        String instruction = "deadline complete notetaking for CS2103T /by 2025-02-05";
+
+        DeadlineCommand cmd = new DeadlineCommand(taskList, ui, instruction);
+        boolean result = cmd.execute();
+        assertTrue(result);
+        assertEquals(1, taskList.size());
+    }
+
+    @Test
+    public void testInvalidMissingBackslash() throws NovaException {
         TaskList taskList = new TaskList(new ArrayList<>());
         Ui ui = new Ui();
         String instruction = "deadline finsh assignment by 2025-02-05 23:59";
+        boolean result = true;
+
+        try {
+            DeadlineCommand cmd = new DeadlineCommand(taskList, ui, instruction);
+        } catch (NovaException e) {
+            result = false;
+        }
+        assertFalse(result);
+        assertEquals(0, taskList.size());
+    }
+
+    @Test
+    public void testInvalidMissingDescriptor() throws NovaException {
+        TaskList taskList = new TaskList(new ArrayList<>());
+        Ui ui = new Ui();
+        String instruction = "deadline /by 2025-02-05 23:59";
+        boolean result = true;
+
+        try {
+            DeadlineCommand cmd = new DeadlineCommand(taskList, ui, instruction);
+        } catch (NovaException e) {
+            result = false;
+        }
+        assertTrue(result);
+        assertEquals(0, taskList.size());
+    }
+
+    @Test
+    public void testInvalidDateFormat() throws NovaException {
+        TaskList taskList = new TaskList(new ArrayList<>());
+        Ui ui = new Ui();
+        String instruction = "deadline /by 2025--:05 23:";
         boolean result = true;
 
         try {

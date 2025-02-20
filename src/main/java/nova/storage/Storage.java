@@ -16,21 +16,24 @@ import nova.task.Event;
 import nova.task.Task;
 import nova.task.Todo;
 import nova.tasklist.TaskList;
+import nova.ui.Ui;
 
 /**
  * Handles file-based storage operations for tasks.
  */
 public class Storage {
     private final File dataFile;
+    private final Ui ui;
 
-    public Storage(String filePath) {
+    public Storage(String filePath, Ui ui) {
         this.dataFile = new File(filePath.replace("/", File.separator));
+        this.ui = ui;
     }
 
     /**
      * Loads tasks from CSV data file.
      *
-      * @return a list of tasks loaded from the file; returns empty list if file not found.
+     * @return a list of tasks loaded from the file; returns empty list if file not found.
      */
     public List<Task> loadTask() {
         List<Task> tasks = new ArrayList<Task>();
@@ -51,7 +54,7 @@ public class Storage {
             }
             return tasks;
         } catch (IOException e) {
-            System.out.println("    Error reading data file: " + e.getMessage());
+            ui.addMessages("Error reading saved Todo List: " + e.getMessage());
             return null;
         }
     }
@@ -80,11 +83,11 @@ public class Storage {
                 LocalDateTime endTime = LocalDateTime.parse(parts[4]);
                 return new Event(description, startTime, endTime, isDone);
             default:
-                System.out.println("    Unknown task type: " + type);
+                ui.addMessages("Unknown task type: " + type);
                 return null;
             }
         } catch (ArrayIndexOutOfBoundsException | DateTimeException e) {
-            System.out.println("    Error parsing data file: " + e.getMessage());
+            ui.addMessages("Error reading task entry: " + e.getMessage());
             return null;
         }
     }
@@ -114,7 +117,7 @@ public class Storage {
                 return true;
             }
         } catch (IOException e) {
-            System.out.println("    Error saving tasks: " + e.getMessage());
+            ui.addMessages("Error saving tasks: " + e.getMessage());
             return false;
         }
     }

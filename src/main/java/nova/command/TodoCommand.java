@@ -42,7 +42,7 @@ public class TodoCommand implements Command {
         Task todo = new Todo(this.description);
         toDoList.addTask(todo);
         ui.addMessages("Got it. I've added this task:" , "  " + todo);
-        ui.addMessages(String.format("Now you have %d tasks in the list.", toDoList.size()));
+        ui.addMessages(String.format("Now you have %d task(s) in the list.", toDoList.size()));
         return true;
     }
 }

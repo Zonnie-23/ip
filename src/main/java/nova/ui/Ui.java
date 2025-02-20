@@ -25,7 +25,7 @@ public class Ui {
     public void displayTasks(TaskList taskList) {
         List<Task> tasks = taskList.getTasks();
         for (int i = 0; i < taskList.size(); i++) {
-            response.append((i + 1)).append(".").append(tasks.get(i)).append("\n");
+            response.append((i + 1)).append(". ").append(tasks.get(i)).append("\n");
         }
     }
 

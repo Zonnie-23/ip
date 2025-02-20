@@ -52,6 +52,12 @@ public class FindCommand implements Command {
                 matchedTaskList.addTask(currTask);
             }
         }
+
+        if (matchedTaskList.size() == 0) {
+            ui.addMessages("No matches found");
+            return true;
+        }
+
         ui.addMessages("Here are the matching tasks in your list: ");
         ui.displayTasks(matchedTaskList);
         return true;

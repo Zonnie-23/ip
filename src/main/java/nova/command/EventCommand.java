@@ -54,7 +54,7 @@ public class EventCommand implements Command {
         Task event = new Event(instruction[0].substring("event".length() + 1), startTime, endTime);
         toDoList.addTask(event);
         ui.addMessages("Got it. I've added this task:" , "  " + event);
-        ui.addMessages(String.format("Now you have %d tasks in the list.", toDoList.size()));
+        ui.addMessages(String.format("Now you have %d task(s) in the list.", toDoList.size()));
         return true;
     }
 }
