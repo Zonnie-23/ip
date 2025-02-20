@@ -19,8 +19,8 @@ public class DeadlineCommandTest {
         String instruction = "deadline finish assignment /by 2025-02-05 23:59";
 
         DeadlineCommand cmd = new DeadlineCommand(taskList, ui, instruction);
-        boolean result = cmd.execute();
-        assertTrue(result);
+        boolean isSuccessful = cmd.execute();
+        assertTrue(isSuccessful);
         assertEquals(1, taskList.size());
     }
 
@@ -31,8 +31,8 @@ public class DeadlineCommandTest {
         String instruction = "deadline complete notetaking for CS2103T /by 2025-02-05";
 
         DeadlineCommand cmd = new DeadlineCommand(taskList, ui, instruction);
-        boolean result = cmd.execute();
-        assertTrue(result);
+        boolean isSuccessful = cmd.execute();
+        assertTrue(isSuccessful);
         assertEquals(1, taskList.size());
     }
 
@@ -41,14 +41,14 @@ public class DeadlineCommandTest {
         TaskList taskList = new TaskList(new ArrayList<>());
         Ui ui = new Ui();
         String instruction = "deadline finsh assignment by 2025-02-05 23:59";
-        boolean result = true;
+        boolean isSuccessful = false;
 
         try {
             DeadlineCommand cmd = new DeadlineCommand(taskList, ui, instruction);
         } catch (NovaException e) {
-            result = false;
+            isSuccessful = true;
         }
-        assertFalse(result);
+        assertTrue(isSuccessful);
         assertEquals(0, taskList.size());
     }
 
@@ -57,14 +57,15 @@ public class DeadlineCommandTest {
         TaskList taskList = new TaskList(new ArrayList<>());
         Ui ui = new Ui();
         String instruction = "deadline /by 2025-02-05 23:59";
-        boolean result = true;
+        boolean isSuccessful = false;
 
         try {
             DeadlineCommand cmd = new DeadlineCommand(taskList, ui, instruction);
+            isSuccessful = !cmd.execute();
         } catch (NovaException e) {
-            result = false;
+            isSuccessful = true;
         }
-        assertTrue(result);
+        assertTrue(isSuccessful);
         assertEquals(0, taskList.size());
     }
 
@@ -73,14 +74,14 @@ public class DeadlineCommandTest {
         TaskList taskList = new TaskList(new ArrayList<>());
         Ui ui = new Ui();
         String instruction = "deadline /by 2025--:05 23:";
-        boolean result = true;
+        boolean isSuccessful = false;
 
         try {
             DeadlineCommand cmd = new DeadlineCommand(taskList, ui, instruction);
         } catch (NovaException e) {
-            result = false;
+            isSuccessful = true;
         }
-        assertFalse(result);
+        assertTrue(isSuccessful);
         assertEquals(0, taskList.size());
     }
 }

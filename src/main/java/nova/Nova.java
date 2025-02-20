@@ -85,8 +85,8 @@ public class Nova {
             return new DeleteCommand(toDoList, ui, msgParts);
 
         case "save":
-            boolean toExit = currCommand instanceof ByeCommand;
-            return new SaveCommand(toDoList, ui, taskDataManager, toExit);
+            boolean shouldExit = currCommand instanceof ByeCommand;
+            return new SaveCommand(toDoList, ui, taskDataManager, shouldExit);
         case "bye":
             return new ByeCommand(ui);
         default:
