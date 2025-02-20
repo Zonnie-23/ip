@@ -24,7 +24,8 @@ import nova.ui.Ui;
 
 public class Nova {
     private static final List<String> COMMANDS =
-            Arrays.asList("bye", "save", "list", "mark", "unmark", "event", "deadline", "todo", "delete", "find", "schedule");
+            Arrays.asList("deadline", "event", "todo", "list", "find", "schedule", "mark", "unmark", "delete",
+                    "save", "bye" );
 
     private Ui ui = new Ui();
     private Storage taskDataManager = new Storage("./data/task.csv", ui);

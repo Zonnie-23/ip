@@ -39,7 +39,7 @@ Example: `help`
 
 ```
 I accept the following instructions:
-[deadline, event, todo, bye, save, list, mark, unmark, delete, find, schedule]
+[deadline, event, todo, list, find, schedule, mark, unmark, delete, save, bye]
 ```
 
 ## Adding deadlines `deadline`
@@ -215,4 +215,4 @@ Hope to see you again soon!
 ```
 
 ### Credits
-https://se-education.org/addressbook-level3/UserGuide.html#features
+[AB3 UserGuide](https://se-education.org/addressbook-level3/UserGuide.html#features)
